@@ -141,3 +141,4 @@ cython_debug/
 # Personal
 .vscode/
 .DS_Store
+myvenv/
