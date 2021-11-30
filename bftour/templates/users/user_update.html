@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block page_title %}회원 정보 수정{% endblock page_title %}
+{% block content %}
+
+
+<h1>회원 정보 수정</h1>
+{% include 'users/partials/navbar.html' %}
+
+<form action="." method="POST">
+    {% csrf_token %}
+    <h4>회원 아이디: {{user.user_id}}</h4>
+    {{form.as_p}}
+    <button>회원 정보 수정</button>
+</form>
+{% endblock %}

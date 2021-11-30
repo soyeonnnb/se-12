@@ -21,7 +21,7 @@ class Login(View):
     def post(self, request):
         form = forms.LoginForm(request.POST)
         if form.is_valid():
-            user_id = form.cleaned_data.get("id")
+            user_id = form.cleaned_data.get("user_id")
             password = form.cleaned_data.get("password")
             user = authenticate(request, user_id=user_id, password=password)
             if user is not None:
@@ -62,4 +62,11 @@ def user_info_view(request):
 
 # 사용자 정보 수정
 class UserUpdate(UpdateView):
-    pass
+
+    model = models.User
+    form_class = forms.UserUpdateForm
+    template_name = "users/user_update.html"
+    success_url = reverse_lazy("users:mypage")
+
+    def get_object(self, queryset=None):
+        return self.request.user

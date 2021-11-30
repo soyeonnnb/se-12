@@ -62,3 +62,14 @@ class RegisterForm(forms.ModelForm):
         user.username = user_id
         user.set_password(password)
         user.save()
+
+
+# 회원정보 수정 Form
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = (
+            "user_name",
+            "user_phone",
+            "user_email",
+        )
