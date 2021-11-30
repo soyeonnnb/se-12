@@ -8,6 +8,7 @@ from django.contrib.auth.views import PasswordChangeView
 
 from . import forms
 from . import models
+from . import mixins
 
 # 아직 home이 없어서 user home을 만들어 주었음
 def home(request):
@@ -64,7 +65,7 @@ def user_info_view(request):
 
 
 # 사용자 정보 수정
-class UpdateUser(UpdateView):
+class UpdateUser(mixins.LoggedInOnlyView, UpdateView):
 
     model = models.User
     form_class = forms.UserUpdateForm
@@ -76,7 +77,7 @@ class UpdateUser(UpdateView):
 
 
 # 회원 탈퇴
-class Withdrawl(DeleteView):
+class Withdrawal(mixins.LoggedInOnlyView, DeleteView):
 
     model = models.User  # 해당 테이블의 인스턴스 삭제
     context_object_name = "user"
@@ -89,7 +90,7 @@ class Withdrawl(DeleteView):
 
 
 # 비밀번호 변경
-class UpdatePasswordView(PasswordChangeView):
+class UpdatePasswordView(mixins.LoggedInOnlyView, PasswordChangeView):
 
     model = models.User
     template_name = "users/password_update.html"
