@@ -4,6 +4,7 @@ from django.urls.base import reverse_lazy
 from django.views.generic import View, FormView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
 
 from . import forms
 from . import models
@@ -85,3 +86,14 @@ class Withdrawl(DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
+
+
+# 비밀번호 변경
+class UpdatePasswordView(PasswordChangeView):
+
+    model = models.User
+    template_name = "users/password_update.html"
+    success_url = reverse_lazy("users:mypage")
+
+    def get_object(self, queryset=None):
+        return self.request.user
