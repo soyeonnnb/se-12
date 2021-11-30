@@ -11,4 +11,5 @@
     <h4>전화번호 {{user_info.user_phone}}</h4>
     <a href="{% url 'users:update' %}">회원정보 수정</a>
 </div>
+<a href="{% url 'users:delete' pk=user.pk %}">회원탈퇴</a>
 {% endblock %}

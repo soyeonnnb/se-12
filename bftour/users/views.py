@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls.base import reverse_lazy
-from django.views.generic import View, FormView, UpdateView
+from django.views.generic import View, FormView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from . import forms
 from . import models
@@ -54,6 +55,7 @@ class Register(FormView):
 
 
 # 사용자 정보
+@login_required
 def user_info_view(request):
     user = request.user
     user_info = models.User.objects.get(pk=user.pk)
@@ -70,3 +72,16 @@ class UpdateUser(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+# 회원 탈퇴
+class Withdrawl(DeleteView):
+
+    model = models.User  # 해당 테이블의 인스턴스 삭제
+    context_object_name = "user"
+
+    def get_success_url(self):
+        return reverse_lazy("users:home")
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
