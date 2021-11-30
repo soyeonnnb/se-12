@@ -44,10 +44,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Custom User Model"""
 
     user_id = models.CharField(max_length=50, unique=True, blank=False, null=False)
-    name = models.CharField(max_length=30, blank=False)  # 이름 애트리뷰트
+    user_name = models.CharField(max_length=30, blank=False)  # 이름 애트리뷰트
     password = models.CharField(max_length=45)  # Password 애트리뷰트
-    mobile = models.IntegerField(blank=True, null=True)  # 핸드폰번호 애트리뷰트
-    email = models.EmailField(
+    user_phone = models.IntegerField(blank=True, null=True)  # 핸드폰번호 애트리뷰트
+    user_email = models.EmailField(
         unique=True, blank=False, null=False
     )  # Email 애트리뷰트, 중복데이터 비허용
     is_host = models.BooleanField(default=False)  # 호스트 여부 필드
@@ -61,4 +61,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()  # User table을 위해 필요한 코드
 
     USERNAME_FIELD = "user_id"  # id가 식별자
-    REQUIRED_FIELDS = ["name"]  # 필수입력값
+    REQUIRED_FIELDS = ["user_name"]  # 필수입력값

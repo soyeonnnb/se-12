@@ -14,9 +14,9 @@ class UserAdmin(admin.ModelAdmin):  # Admin 페이지에 User 테이블 추가
             {
                 "fields": (
                     "user_id",
-                    "name",
-                    "mobile",
-                    "email",
+                    "user_name",
+                    "user_phone",
+                    "user_email",
                     "is_host",
                 )
             },
@@ -34,14 +34,14 @@ class UserAdmin(admin.ModelAdmin):  # Admin 페이지에 User 테이블 추가
     )
     list_display = (  # 메인 화면에서 해당 애트리뷰트들 보이기
         "user_id",
-        "name",
-        "email",
+        "user_name",
+        "user_email",
         "is_host",
         "is_staff",
     )
     ordering = (
         "user_id",
-        "name",
+        "user_name",
     )  # 해당 애트리뷰트들로 순서
     list_filter = (
         "is_host",

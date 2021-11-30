@@ -33,3 +33,4 @@ class LoginView(View):
 def logout_view(request):
     logout(request)
     return redirect(reverse_lazy("users:home"))
+
