@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls.base import reverse_lazy
-from django.views.generic import View, FormView
+from django.views.generic import View, FormView, UpdateView
 from django.urls import reverse, reverse_lazy
 
 from . import forms
+from . import models
 
 # 아직 home이 없어서 user home을 만들어 주었음
 def home(request):
@@ -50,3 +51,15 @@ class Register(FormView):
         if user is not None:
             login(self.request, user)
         return super().form_valid(form)
+
+
+# 사용자 정보
+def user_info_view(request):
+    user = request.user
+    user_info = models.User.objects.get(pk=user.pk)
+    return render(request, "users/mypage.html", {"user_info": user_info})
+
+
+# 사용자 정보 수정
+class UserUpdate(UpdateView):
+    pass

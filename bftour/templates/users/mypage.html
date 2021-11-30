@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block page_title %}마이페이지{% endblock page_title %}
+{% block content %}
+
+<h1>마이페이지</h1>
+{% include 'users/partials/navbar.html' %}
+<div>
+    <h4>이름 {{user_info.user_name}}</h4>
+    <h4>아이디 {{user_info.user_id}}</h4>
+    <h4>이메일 {{user_info.user_email}}</h4>
+    <h4>전화번호 {{user_info.user_phone}}</h4>
+    <a href="#">회원정보 수정</a>
+</div>
+{% endblock %}

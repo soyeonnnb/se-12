@@ -1,8 +1,7 @@
-user home
+{% extends 'base.html' %}
+{% block page_title %}User Home{% endblock page_title %}
+{% block content %}
 
-{% if user.is_authenticated %}
-<a href="{% url 'users:logout' %}">로그아웃</a>
-{% else %}
-<a href="{% url 'users:login' %}">로그인</a>
-<a href="{% url 'users:register' %}">회원가입</a>
-{% endif %}
+<h1>user home</h1>
+
+{% endblock %}

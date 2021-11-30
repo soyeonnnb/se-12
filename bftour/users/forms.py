@@ -26,13 +26,7 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = models.User
-        fields = (
-            "user_id",
-            "user_name",
-            "user_phone",
-            "user_email",
-            "is_host",
-        )
+        fields = ("user_id", "user_name", "user_phone", "user_email", "is_host")
 
     password = forms.CharField(widget=forms.PasswordInput(attrs={"label": "비밀번호"}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={"label": "비밀번호 확인"}))
