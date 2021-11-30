@@ -14,5 +14,5 @@ urlpatterns = [
     path(
         "update_password/", views.UpdatePasswordView.as_view(), name="update_password"
     ),
-    path("<int:pk>/delete/", views.Withdrawl.as_view(), name="delete"),
+    path("delete/", views.user_withdrawal, name="delete"),
 ]

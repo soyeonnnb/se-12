@@ -77,16 +77,12 @@ class UpdateUser(mixins.LoggedInOnlyView, UpdateView):
 
 
 # 회원 탈퇴
-class Withdrawal(mixins.LoggedInOnlyView, DeleteView):
-
-    model = models.User  # 해당 테이블의 인스턴스 삭제
-    context_object_name = "user"
-
-    def get_success_url(self):
-        return reverse_lazy("users:home")
-
-    def get(self, request, *args, **kwargs):
-        return self.post(request, *args, **kwargs)
+@login_required
+def user_withdrawal(request):
+    user = request.user
+    user.delete()
+    logout(request)
+    return redirect(reverse_lazy("users:home"))
 
 
 # 비밀번호 변경
