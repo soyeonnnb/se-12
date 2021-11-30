@@ -1,3 +1,28 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.views.generic import View
+from django.urls import reverse
 
-# Create your views here.
+from . import forms
+
+# 아직 home이 없어서 user home을 만들어 주었음
+def home(request):
+    return render(request, "users/home.html")
+
+
+# login view
+class LoginView(View):
+    def get(self, request):
+        form = forms.LoginForm()
+        return render(request, "users/login.html", {"form": form})
+
+    def post(self, request):
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            id = form.cleaned_data.get("id")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, user_id=id, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect(reverse("users:home"))
+        return render(request, "users/login.html", {"form": form})
