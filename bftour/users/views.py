@@ -61,7 +61,7 @@ def user_info_view(request):
 
 
 # 사용자 정보 수정
-class UserUpdate(UpdateView):
+class UpdateUser(UpdateView):
 
     model = models.User
     form_class = forms.UserUpdateForm
