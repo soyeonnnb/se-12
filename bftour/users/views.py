@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.urls.base import reverse_lazy
 from django.views.generic import View
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from . import forms
 
@@ -26,3 +27,9 @@ class LoginView(View):
                 login(request, user)
                 return redirect(reverse("users:home"))
         return render(request, "users/login.html", {"form": form})
+
+
+# Logout view
+def logout_view(request):
+    logout(request)
+    return redirect(reverse_lazy("users:home"))
