@@ -1,22 +1,26 @@
 from django.shortcuts import render, redirect
 from django.views.generic import UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from . import forms
 from . import models
-from reservations import models as reservations_model
+from users import mixins as user_mixin
+from reservations import models as reservation_model
 
 # 아직 reservation과 합치기 전이므로 임의의 내 reservation을 보여주는 템플릿 생성
+@login_required
 def view_reservations(request):
     user = request.user
-    reservation_list = reservations_model.Reservation.objects.filter(user=user)
+    reservation_list = reservation_model.Reservation.objects.filter(user=user)
     return render(
         request, "reviews/reservation.html", {"reservation_list": reservation_list}
     )
 
 
+@login_required
 def make_review(request, pk):
-    reservation = reservations_model.Reservation.objects.get(pk=pk)
+    reservation = reservation_model.Reservation.objects.get(pk=pk)
     user = request.user
     if reservation.user != user:
         return redirect("users:home")
@@ -38,7 +42,7 @@ def make_review(request, pk):
     )
 
 
-class UpdateReview(UpdateView):
+class UpdateReview(user_mixin.LoggedInOnlyView, UpdateView):
 
     model = models.Review
     form_class = forms.ReviewForm
@@ -54,13 +58,14 @@ class UpdateReview(UpdateView):
         return context
 
 
+@login_required
 def view_reviews(request):
     user = request.user
     review_list = models.Review.objects.filter(user=user)
     return render(request, "reviews/review_list.html", {"review_list": review_list})
 
 
-class DeleteReview(DeleteView):
+class DeleteReview(user_mixin.LoggedInOnlyView, DeleteView):
 
     model = models.Review
     context_object_name = "reviews"
