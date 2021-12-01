@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block page_title %}예약 내역{% endblock page_title %}
+{% block content %}
+
+<h1>예약 내역 보기</h1>
+{% include 'users/partials/navbar.html' %}
+<div>
+    {% for re in reservation_list %}
+    <h3>{{re}}</h3>
+    {% if re.has_reviews %}
+    <a href="#">리뷰수정</a>
+    {% else %}
+    <a href="{% url 'reviews:create' pk=re.pk %}">리뷰작성</a>
+    {% endif %}
+    <br />
+    {% endfor %}
+</div>
+{% endblock %}

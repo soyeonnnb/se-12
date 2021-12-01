@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block page_title %}리뷰 생성{% endblock page_title %}
+{% block content %}
+
+<h1>리뷰 생성</h1>
+
+<form action="." method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>리뷰 생성</button>
+</form>
+{% endblock %}
