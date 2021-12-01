@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls.base import reverse_lazy
-from django.views.generic import View, FormView, UpdateView, DeleteView
+from django.views.generic import View, FormView, UpdateView
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView

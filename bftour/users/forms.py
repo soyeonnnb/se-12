@@ -28,7 +28,7 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = models.User
-        fields = ("user_id", "user_name", "user_phone", "user_email", "is_host")
+        fields = ("user_id", "name", "phone", "email", "is_host")
 
     password = forms.CharField(widget=forms.PasswordInput(attrs={"label": "비밀번호"}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={"label": "비밀번호 확인"}))
@@ -41,13 +41,13 @@ class RegisterForm(forms.ModelForm):
         except models.User.DoesNotExist:
             return user_id
 
-    def clean_user_email(self):
-        user_email = self.cleaned_data.get("user_email")
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
         try:
-            models.User.objects.get(user_email=user_email)
-            self.add_error("user_email", ValidationError("이미 존재하는 이메일입니다."))
+            models.User.objects.get(email=email)
+            self.add_error("email", ValidationError("이미 존재하는 이메일입니다."))
         except models.User.DoesNotExist:
-            return user_email
+            return email
 
     def clean_password1(self):
         password = self.cleaned_data.get("password")
@@ -71,7 +71,7 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = (
-            "user_name",
-            "user_phone",
-            "user_email",
+            "name",
+            "phone",
+            "email",
         )
