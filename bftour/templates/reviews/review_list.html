@@ -10,6 +10,7 @@
     <h3>{{re}}</h3>
     <h4>{{re.review}}: {{re.rating}}</h4>
     <a href="{% url 'reviews:update' pk=re.pk %}">리뷰수정</a>
+    <a href="{% url 'reviews:delete' pk=re.pk %}">리뷰삭제</a>
     <hr />
     {% endfor %}
 </div>

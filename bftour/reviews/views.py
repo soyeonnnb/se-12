@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from . import forms
@@ -58,3 +58,15 @@ def view_reviews(request):
     user = request.user
     review_list = models.Review.objects.filter(user=user)
     return render(request, "reviews/review_list.html", {"review_list": review_list})
+
+
+class DeleteReview(DeleteView):
+
+    model = models.Review
+    context_object_name = "reviews"
+
+    def get_success_url(self):
+        return reverse_lazy("reviews:view")
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
