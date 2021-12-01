@@ -8,11 +8,11 @@
     {% for re in reservation_list %}
     <h3>{{re}}</h3>
     {% if re.has_reviews %}
-    <a href="#">리뷰수정</a>
+    <p>작성완료</p>
     {% else %}
     <a href="{% url 'reviews:create' pk=re.pk %}">리뷰작성</a>
     {% endif %}
-    <br />
+    <hr />
     {% endfor %}
 </div>
 {% endblock %}

@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
+from django.views.generic import UpdateView
+from django.urls import reverse_lazy
 
 from . import forms
+from . import models
 from reservations import models as reservations_model
 
 # 아직 reservation과 합치기 전이므로 임의의 내 reservation을 보여주는 템플릿 생성
-def view_reservation(request):
+def view_reservations(request):
     user = request.user
     reservation_list = reservations_model.Reservation.objects.filter(user=user)
     return render(
@@ -13,25 +16,45 @@ def view_reservation(request):
 
 
 def make_review(request, pk):
-    reservation = reservations_model.Reservation.objects.get(
-        pk=pk
-    )  # order table에서 pk값으로 필요한 인스턴스를 가져옴
-    user = request.user  # user는 요청을 보낸 유저
-    if reservation.user != user:  # order 에 fk로 있는 user와 요청을 보낸 유저가 다르다면
+    reservation = reservations_model.Reservation.objects.get(pk=pk)
+    user = request.user
+    if reservation.user != user:
         return redirect("users:home")
     if request.method == "POST":
-        form = forms.CreateReviewForm(request.POST)  # 사용자가 입력한 폼을 가져옴
+        form = forms.ReviewForm(request.POST)
         if form.is_valid():
             finished_form = form.save(commit=False)
-            finished_form.user = request.user  # 폼에 없는 요소들을 채워줌
+            finished_form.user = request.user
             finished_form.reservation = reservation
             finished_form.room = reservation.room
             finished_form.save()
             return redirect("reviews:reservation")
     else:
-        form = forms.CreateReviewForm()
+        form = forms.ReviewForm()
     return render(
         request,
-        "reviews/review_create.html",
-        {"form": form, "reservation": reservation},
+        "reviews/review_form.html",
+        {"form": form, "reservation": reservation, "page_name": "리뷰 등록"},
     )
+
+
+class UpdateReview(UpdateView):
+
+    model = models.Review
+    form_class = forms.ReviewForm
+    success_url = reverse_lazy("reviews:view")
+    template_name = "reviews/review_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateReview, self).get_context_data(**kwargs)
+        context["page_name"] = "리뷰 수정"
+        context["reservation"] = models.Review.objects.get(
+            pk=self.kwargs["pk"]
+        ).reservation
+        return context
+
+
+def view_reviews(request):
+    user = request.user
+    review_list = models.Review.objects.filter(user=user)
+    return render(request, "reviews/review_list.html", {"review_list": review_list})
