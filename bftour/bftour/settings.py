@@ -134,4 +134,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 08af834 (feat: login only 추가, setting.py에 login url 추가)
