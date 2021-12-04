@@ -14,3 +14,4 @@ class Reservation(models.Model):
     def has_reviews(self):
         all_reviews = self.reviews.all()
         return len(all_reviews) > 0
+

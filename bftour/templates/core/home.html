@@ -1,0 +1,6 @@
+home
+<form action="{% url 'core:search' %}" method="GET">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Submit</button>
+</form>

@@ -1,0 +1,11 @@
+<h2>Form</h2>
+<form action="{% url 'core:search' %}" method="GET">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Submit</button>
+</form>
+
+<h3>Result</h3>
+{% for hotel in hotels %}
+{{hotel}}
+{% endfor %}
