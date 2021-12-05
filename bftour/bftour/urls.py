@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path("", include("core.urls", namespace="core")),
@@ -10,4 +12,6 @@ urlpatterns = [
     path("rooms/", include("rooms.urls", namespace="rooms")),
     path("users/", include("users.urls", namespace="users")),
     path("admin/", admin.site.urls),
+    path('', include('hotels.urls')),
 ]
+
