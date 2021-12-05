@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import View
-from hotels import models as hotels_model
 from django.core.paginator import Paginator
 from django.db.models import Q
 
 from . import forms
+from hotels import models as hotels_model
+from reservations import models as reservations_model
+from rooms import models as rooms_model
 
 
 def home(request):
@@ -14,32 +16,41 @@ def home(request):
 
 class SearchView(View):
     def get(self, request):
-        if (
-            request.GET.get("text")
-            or request.GET.get("start")
-            or request.GET.get("type")
-        ):
+        if request.GET.get("text"):
             form = forms.SearchForm(request.GET)
             if form.is_valid():
                 text = form.cleaned_data.get("text")
                 types = form.cleaned_data.get("types")
-                n_hotels = hotels_model.Hotel.objects.all()
+                start = form.cleaned_data.get("start")
+                end = form.cleaned_data.get("end")
+                n_rooms = rooms_model.Room.objects.all()
                 if text:
-                    n_hotels = n_hotels.filter(
-                        Q(title__icontains=text)
-                        | Q(place__icontains=text)
-                        | Q(address__icontains=text)
+                    n_rooms = n_rooms.filter(
+                        Q(hotel__title__icontains=text)
+                        | Q(hotel__place__icontains=text)
+                        | Q(hotel__address__icontains=text)
                     )
+                type_args = {}
                 for type in types:
-                    n_hotels = n_hotels.filter(type=type)
+                    type_args["hotel__type"] = type
+                n_rooms = n_rooms.filter(**type_args)
+                date_args = dict(
+                    check_in__lte=end, check_out__gte=start
+                )  # just for redability
+                for room in n_rooms:
+                    is_occupied = reservations_model.Reservation.objects.filter(
+                        **date_args, room=room
+                    ).exists()
+                    if is_occupied:
+                        n_rooms = n_rooms.exclude(pk=room.pk)
                 # 나중에 별점순으로 변경
-                paginator = Paginator(n_hotels, 10, orphans=5)
+                paginator = Paginator(n_rooms, 10, orphans=5)
                 page = request.GET.get("page", 1)
-                hotels = paginator.get_page(page)
+                rooms = paginator.get_page(page)
                 return render(
                     request,
                     "core/result.html",
-                    {"form": form, "hotels": hotels},
+                    {"form": form, "rooms": rooms},
                 )
         else:
             form = forms.SearchForm()
