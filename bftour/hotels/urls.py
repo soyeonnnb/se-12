@@ -11,9 +11,9 @@ from django.conf import settings
 app_name = "hotels"
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('index/', views.index, name='index'),
     path('blog/',blog, name='blog'),
-    path('blog/<int:pk>/',posting, name="posting"),
+    path('index/<int:pk>/',posting, name="posting"),
    
 ]
 
