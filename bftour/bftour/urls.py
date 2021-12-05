@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path("hotels/", include("hotels.urls", namespace="hotels")),
@@ -11,3 +13,4 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('hotels.urls')),
 ]
+
