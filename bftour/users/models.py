@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
 )
 
+
 # User Table 생성하기 위해 필요한 클래스
 class UserManager(BaseUserManager):
     use_in_migrations = True

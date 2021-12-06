@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+import json
 
 urlpatterns = [
     path("", include("core.urls", namespace="core")),
