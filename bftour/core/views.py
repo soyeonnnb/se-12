@@ -11,7 +11,11 @@ from rooms import models as rooms_model
 
 def home(request):
     form = forms.SearchForm()
-    return render(request, "core/home.html", {"form": form})
+    type = hotels_model.RoomType.objects.first()
+    hotels = hotels_model.Hotel.objects.filter(type=type)
+    return render(
+        request, "core/home.html", {"form": form, "type": type, "hotels": hotels}
+    )
 
 
 class SearchView(View):
@@ -23,7 +27,7 @@ class SearchView(View):
                 types = form.cleaned_data.get("types")
                 start = form.cleaned_data.get("start")
                 end = form.cleaned_data.get("end")
-                n_rooms = rooms_model.Room.objects.all()
+                n_rooms = rooms_model.Room.objects.all().order_by("hotel__reg_dt")
                 if text:
                     n_rooms = n_rooms.filter(
                         Q(hotel__title__icontains=text)
