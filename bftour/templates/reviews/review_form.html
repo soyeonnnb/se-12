@@ -5,13 +5,16 @@
 <h1>{{page_name}}</h1>
 
 <div>
-    <h4>호텔이름 :{{reservation.room.hotel.name}}</h4>
-    <h4>객실이름 :{{reservation.room}}</h4>
+    <h4>체크인 날짜 :{{user.name}}</h4>
+    <h4>체크아웃 날짜 :{{user.name}}</h4>
+    {% for room in room%}
+    <h4>예약자 이름 :{{user.name}}</h4>
+    <h4>예약자 이름 :{{user.name}}</h4>
 </div>
 
 <form action="." method="POST">
     {% csrf_token %}
     {{form.as_p}}
-    <button>{{page_name}}</button>
+    <button>{{=}}</button>
 </form>
 {% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Reservation
+{% endblock page_title %}
+
+
+{% block content %}
+<form action="{% url 'reservations:create' pk=room.pk %}" method="POST">
+    {% csrf_token %}
+    
+    <button>Submit</button>
+</form>
+
+{% endblock content %}
+
+
+
+{% extends 'base.html' %}
+{% block page_title %}{{page_name}}{% endblock page_title %}
+{% block content %}
+
+<h1>{{page_name}}</h1>
+
+<div>
+    <h4>호텔이름 :{{reservation.room.hotel.name}}</h4>
+    <h4>객실이름 :{{reservation.room}}</h4>
+</div>
+
+<form action="." method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>{{page_name}}</button>
+</form>
+{% endblock %}

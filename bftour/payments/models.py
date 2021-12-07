@@ -4,9 +4,9 @@ from django import forms
 # Create your models here.
 class Payment(models.Model):
 
-    PAYMENT_CREDITCARD = "credit card"
-    PAYMENT_VIRTUALACCOUNT = "virtual account"
-    PAYMENT_TRANSFERACCOUNT = "transfer account"
+    PAYMENT_CREDITCARD = "credit_card"
+    PAYMENT_VIRTUALACCOUNT = "virtual_account"
+    PAYMENT_TRANSFERACCOUNT = "transfer_account"
     PAYMENT_PHONE = "phone"
     PAYMENT_TOSS = "toss"
     PAYMENT_KAKAOPAY = "kakaopay"

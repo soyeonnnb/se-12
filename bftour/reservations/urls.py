@@ -1,15 +1,10 @@
 from django.urls import path
 from . import views
+from django.conf.urls import url
 
 app_name = "reservations"
 
 urlpatterns = [
-    path(
-        "create/<int:room>/<int:year>-<int:month>-<int:day>",
-        views.create,
-        name="create",
-    ),
-    path("<int:pk>/", views.ReservationDetailView.as_view(), name="detail"),
-    path("<int:pk>/<str:verb>", views.edit_reservation, name="edit"),
+    path('reservation_list/', views.ReservationListView, name='ReservationList')
 ]
 

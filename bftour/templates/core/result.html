@@ -8,5 +8,6 @@
 <h3>Result</h3>
 {% for room in rooms %}
 <h4>{{room}}</h4>
+<a href="{% url 'reservations:create1' pk=room.pk %}">예약하기</a>
 
 {% endfor %}
