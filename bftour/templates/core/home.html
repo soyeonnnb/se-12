@@ -1,6 +1,15 @@
-home
+{% extends 'base.html' %}
+{% block content %}
+<h1>Home</h1>
 <form action="{% url 'core:search' %}" method="GET">
     {% csrf_token %}
     {{form.as_p}}
     <button>Submit</button>
 </form>
+<div>
+    <h3>{{type}}이(가) 있는 호텔</h3>
+    {% for hotel in hotels %}
+    {{hotel}}
+    {% endfor %}
+</div>
+{% endblock %}
