@@ -14,7 +14,8 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('makehotel/',makehotels, name='makehotel'),
     path('index/<int:pk>/',viewhotel, name="viewhotel"),
-   
+    path('delete/<int:pk>', deletehotel, name='deletehotel'),
+    path('update/<int:pk>', updatehotel, name="updatehotel")
 ]
 
 #이미지 url 설정

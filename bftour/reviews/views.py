@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-
-# Create your views here.
-=======
 from django.shortcuts import render, redirect
 from django.views.generic import UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -75,4 +70,3 @@ class DeleteReview(DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
->>>>>>> parent of 08af834 (feat: login only 추가, setting.py에 login url 추가)
