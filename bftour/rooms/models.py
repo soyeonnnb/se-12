@@ -11,7 +11,7 @@ class Room(models.Model):
     )
     
     room_name = models.CharField(max_length=50, default="")
-    price = models.IntegerField(default=0) 
+    price = models.CharField(max_length=50, default="") 
     
     def __str__(self):
         return self.room_name

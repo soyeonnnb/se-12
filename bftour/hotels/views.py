@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Post, Hotel, RoomType
-from .forms import MakeHotel
+from .models import Hotel
+from .forms import MakeHotel, MakeRoom
 from rooms.models import Room
-from django.utils import timezone
+
 
 # Create your views here.
 def index(request):
@@ -10,26 +10,36 @@ def index(request):
     context = {'hotels': hotels}
     return render(request, 'hotels/index.html',context)
 
-def blog(request):
-    #모든 Post를 가져와 list에 저장하고 페이지를 열때 list로 가져오게 함
+def makehotels(request):
     if request.method == 'POST':
         form = MakeHotel(request.POST, request.FILES)
+        form2 = MakeRoom(request.POST)
         
         if form.is_valid():
             forms = form.save(commit=False)
+            forms.facility = request.POST.getlist('types[]')
+            forms.reg_id = request.user.id
             forms.save()
-            return redirect("/index")  
+              
+        if form2.is_valid():
+            forms2 = form2.save(commit=False)
+            forms2.room_name = request.POST.getlist('roomNm');
+            forms2.price = request.POST.getlist('room_price');
+            forms2.hotel_id = forms.id
+            forms2.user_id = request.user.id
+            forms2.save()
+            
+        return redirect("/index") 
     else:
-        form = MakeHotel()      
+        form = MakeHotel()    
+        form2 = MakeRoom()
     
-    return render(request, 'hotels/blog.html', {'form':form})
+    return render(request, 'hotels/makehotel.html', {'form':form, 'form2':form2})
  
-#게시글(posting)을 부르는 posting 함수
-def posting(request, pk):
+def viewhotel(request, pk):
     # 게시글(Post) 중 pk(primary_key)를 이용해 하나의 게시글(post)를 검색
     hotels = Hotel.objects.get(pk=pk)
     rooms= Room.objects.filter(hotel=pk)
-    types=hotels.type.all()
     # posting.html 페이지를 열 때, 찾아낸 게시글(post)을 post라는 이름으로 가져옴
-    return render(request, 'hotels/posting.html', {'hotels':hotels, 'rooms':rooms,'types':types})
+    return render(request, 'hotels/viewhotel.html', {'hotels':hotels, 'rooms':rooms})
 

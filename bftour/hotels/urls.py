@@ -12,8 +12,8 @@ app_name = "hotels"
 
 urlpatterns = [
     path('index/', views.index, name='index'),
-    path('blog/',blog, name='blog'),
-    path('index/<int:pk>/',posting, name="posting"),
+    path('makehotel/',makehotels, name='makehotel'),
+    path('index/<int:pk>/',viewhotel, name="viewhotel"),
    
 ]
 
