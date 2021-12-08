@@ -25,12 +25,11 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "bootstrap_modal_forms",
+    # "bootstrap_modal_forms",
 ]
 
 PROJECT_APPS = [
     "hotels.apps.HotelsConfig",
-    "payments.apps.PaymentsConfig",
     "reservations.apps.ReservationsConfig",
     "reviews.apps.ReviewsConfig",
     "rooms.apps.RoomsConfig",

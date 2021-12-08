@@ -1,192 +1,134 @@
 import datetime
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
-from django.views.generic import View, ListView, CreateView, DetailView
+from django.http import Http404, request
+from django.views.generic import View, ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from rooms import models as room_models
-from reviews import forms as review_forms
+from django.urls import reverse, reverse_lazy
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
+
 from . import models
 from . import forms
 
-class CreateError(Exception):
-    pass
+from users import mixins as user_mixin
 
+#For booking the room
 
-# ------ MIXINS ------ #
+# # 상품 예약
+# @login_required(login_url='/user')
+# def make_reservation(request):
+#     if request.method =="POST":
 
-class ReservationViewMixin(object):
-    model = models.Reservation
-    form_class = forms.ReservationForm
+#         room_id = request.POST['room_id']
+        
+#         room = Room.objects.all().get(room_name)
+#         #for finding the reserved rooms on this time period for excluding from the query set
+#         for each_reservation in Reservation.objects.all().filter(room = room):
+#             if str(each_reservation.check_in) < str(request.POST['check_in']) and str(each_reservation.check_out) < str(request.POST['check_out']):
+#                 pass
+#             elif str(each_reservation.check_in) > str(request.POST['check_in']) and str(each_reservation.check_out) > str(request.POST['check_out']):
+#                 pass
+#             else:
+#                 messages.warning(request,"Sorry This Room is unavailable for Booking")
+#                 return redirect("homepage")
+            
+#         current_user = request.user
+#         reservation_id = str(room_id) + str(datetime.datetime.now())
+
+#         reservation = Reservation()
+#         room_object = Room.objects.all().get(id=room_id)
+#         room_object.status = '2'
+        
+#         user_object = User.objects.all().get(username=current_user)
+
+#         Reservation.user = user_object
+#         Reservation.room = room_object
+#         Reservation.check_in = request.POST['check_in']
+#         Reservation.check_out = request.POST['check_out']
+
+#         Reservation.save()
+
+#         messages.success(request,"Congratulations! Booking Successfull")
+
+#         return redirect("homepage")
+#     else:
+#         return HttpResponse('Access Denied')
+
+class CreateReservationView(user_mixin.LoggedInOnlyView, CreateView):
+    model = models.Reservation 
+    context_object_name = "reservation"
+    form_calss = forms.ReservationForm
+    success_url = reverse_lazy("reviews:reservation")
+    template_name = "reservations/reservation_form.html"
     
-# ------ MODEL VIEWS ------ #
+    def form_valid(self, form):
+        messages.success(self.request, 'form is valid')
+        form.instance.user = self.request.user 
+        form.save()
 
-class ReservationCreateView(ReservationViewMixin, CreateView):
-    """View to create a new ``Reservation`` instance."""
     def get_success_url(self):
-        return reverse('reservation_detail', kwargs={'pk': self.object.pk})
+        messages.success(self.request, 'Reservation Added Successfully')
+        return reverse("reviews:reservation")
+    
+    # def get_form_kwargs(self):
+    #     kwargs = super(CreateReservationView, self).get_form_kwargs()
+    #     kwarsg['user'] = self.request.user
+    #     return kwargs 
+        
+    # def form_valid(self, form):
+    #     reservation = form.save(commit=False)
+    #     reservation.
+    
+    # def dispatch(self, *args, **kwargs):
+    #     return super(CreateReservationView, self).dispatch(*args, **kwargs)
+    
+    # def get_user_initial(self):
+    #     return {'user_name': {request.user.name}, 
+    #             'user_phone':{request.user.phone}, 
+    #             'user_email':{request.user.email},
+    #             }
+    
+    
+    # def form_valid(self, form) :
+    #     temp_reservation = form.save(commit=False)
+    #     temp_reservation.user = self.request.user
+    #     temp_reservation.save()
+        
+    #     return super().form_valid(form) 
+    
 
-    def get_form_kwargs(self, *args, **kwargs):
-        kwargs = super(ReservationCreateView, self).get_form_kwargs(
-            *args, **kwargs)
-        if self.request.user.is_authenticated():
-            kwargs.update({'user': self.request.user})
-        # else :
-        return kwargs
+# 예약 수정
+class UpdateReservationView(user_mixin.LoggedInOnlyView, UpdateView):
+    model = models.Reservation 
+    form_class = forms.ReservationForm
+    success_url = reverse_lazy("reviews:reservation")
+    template_name = "reservations/reservation_form.html"
 
-class ReservationDetailView(ReservationViewMixin, DetailView):
-    """View to display a ``Booking`` instance."""
-    def dispatch(self, request, *args, **kwargs):
-        self.kwargs = kwargs
-        self.object = self.get_object()
-        if self.request.user.is_authenticated():
-            # If user doesn't own the booking forbid access
-            if not self.object.user == request.user:
-                raise Http404
-        # else
-        return super(ReservationViewMixin, self).dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super(UpdateReservationView, self).get_context_data(**kwargs)
+        context["page_name"] = "예약 수정"
+        context["reservation"] = models.Reservation.objects.get(pk=self.kwargs["pk"])
+        # .reservation
+        return context
+    
+# 예약 삭제 (코드작성완료)
+class DeleteReservationView(user_mixin.LoggedInOnlyView, DeleteView):
 
-class ReservationListView(ReservationViewMixin, ListView):
-    """View to display all ``Reservation`` instances of one user."""
-    @login_required
-    def dispatch(self, request, *args, **kwargs):
-        return super(ReservationViewMixin, self).dispatch(request, *args, **kwargs)
+    model = models.Reservation 
+    context_object_name = "reservations"
 
-    def get_queryset(self):
-        return self.request.user.reservations.all()
+    def get_success_url(self):
+        return reverse_lazy("reservations:reservation_list")
 
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+    
 
+        
+        
 
-# @login_required
-# def make_reservation(request, pk):
-#     user = request.user
-#     if reservation.user != user:
-#         return redirect("users:home")
-#     if request.method == "POST":
-#         form = forms.ReservationForm(request.POST)
-#         if form.is_valid():
-#             finished_form = form.save(commit=False)
-#             finished_form.user = request.user
-#             finished_form.reservation = reservation
-#             finished_form.room = reservation.room
-#             finished_form.save()
-#             return redirect("reviews:reservation")
-#     else:
-#         form = forms.ReservationForm()
-#     return render(
-#         request,
-#         "reviews/review_form.html",
-#         {"form": form, "reservation": reservation, "page_name": "예약 상세페이지"},
-#     )
-#     return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))
-
-# @login_required
-# def create(request, room): # 수정
-#     try:
-#         room = room_models.Room.objects.get(pk=room)
-#         raise CreateError()
-#     except (room_models.Room.DoesNotExist, CreateError):
-#         messages.error(request, "Can't Reserve That Room")
-#         return redirect(reverse("core:home"))
-#     except models.BookedDay.DoesNotExist:
-#         reservation = models.Reservation.objects.create(
-#             user=request.user,
-#             room=room,
-#             check_in=date_obj, # 여기
-#             check_out=date_obj + datetime.timedelta(days=1), # 수정
-#         )
-#         return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))
-
-
-# class ReservationDetailView(View):
-#     def get(self, *args, **kwargs):
-#         pk = kwargs.get("pk")
-#         reservation = models.Reservation.objects.get_or_none(pk=pk)
-#         if not reservation or (
-#             reservation.user != self.request.user
-#             and reservation.room.host != self.request.user
-#         ):
-#             raise Http404()
-#         form = review_forms.ReviewForm()
-#         return render(
-#             self.request,
-#             "reservations/detail.html",
-#             {"reservation": reservation, "form": form},
-#         )
-
-# class UpdateReview(user_mixin.LoggedInOnlyView, UpdateView):
-
-#     model = models.Review
-#     form_class = forms.ReviewForm
-#     success_url = reverse_lazy("reviews:view")
-#     template_name = "reviews/review_form.html"
-
-#     def get_context_data(self, **kwargs):
-#         context = super(UpdateReview, self).get_context_data(**kwargs)
-#         context["page_name"] = "리뷰 수정"
-#         context["reservation"] = models.Review.objects.get(
-#             pk=self.kwargs["pk"]
-#         ).reservation
-#         return context
+    
 
 
 
-# def edit_reservation(request, pk, verb):
-#     reservation = models.Reservation.objects.get_or_none(pk=pk)
-#     if not reservation or (
-#         reservation.user != request.user
-#     ):
-#         raise Http404()
-#     if verb == "confirm":
-#         reservation.status = models.Reservation.STATUS_CONFIRMED
-#     elif verb == "cancel":
-#         reservation.status = models.Reservation.STATUS_CANCELED
-#         models.BookedDay.objects.filter(reservation=reservation).delete()
-#     reservation.save()
-#     messages.success(request, "Reservation Updated")
-#     return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))
-
-# @login_required
-# def make_review(request, pk):
-#     reservation = reservation_model.Reservation.objects.get(pk=pk)
-#     user = request.user
-#     if reservation.user != user:
-#         return redirect("users:home")
-#     if request.method == "POST":
-#         form = forms.ReviewForm(request.POST)
-#         if form.is_valid():
-#             finished_form = form.save(commit=False)
-#             finished_form.user = request.user
-#             finished_form.reservation = reservation
-#             finished_form.room = reservation.room
-#             finished_form.save()
-#             return redirect("reviews:reservation")
-#     else:
-#         form = forms.ReviewForm()
-#     return render(
-#         request,
-#         "reviews/review_form.html",
-#         {"form": form, "reservation": reservation, "page_name": "리뷰 등록"},
-#     )
-
-
-
-
-# @login_required
-# def view_reviews(request):
-#     user = request.user
-#     review_list = models.Review.objects.filter(user=user)
-#     return render(request, "reviews/review_list.html", {"review_list": review_list})
-
-
-# class DeleteReview(user_mixin.LoggedInOnlyView, DeleteView):
-
-#     model = models.Review
-#     context_object_name = "reviews"
-
-#     def get_success_url(self):
-#         return reverse_lazy("reviews:view")
-
-#     def get(self, request, *args, **kwargs):
-#         return self.post(request, *args, **kwargs)

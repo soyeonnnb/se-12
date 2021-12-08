@@ -9,15 +9,13 @@ class ReservationAdmin(admin.ModelAdmin):
     list_display = (
         "hotel",
         "room",
-        "status",
+        # "status",
         "check_in",
         "check_out",
         "user",
-        "in_progress",
-        "is_finished",
     )
 
-    list_filter = ("status",)
+    # list_filter = ("status",)
 
 
 # @admin.register(models.BookedDay)
