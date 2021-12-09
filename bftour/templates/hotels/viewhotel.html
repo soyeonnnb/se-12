@@ -26,8 +26,8 @@
     {% for item in rooms %}
     <p>{{item.room_name}}</p>
     <p>{{item.price}}</p>
+    <a href="{% url 'reservations:reservate' room_pk=item.pk %}">예약하기</a>
     {% endfor %}
-
     <h1>편의 시설</h1>
     <input type="hidden" name="types[]" id="na" value="{{hotels.facility}}">
 
@@ -75,7 +75,8 @@
 
     <a href="/index">목록</a>
     <a href="/index">예약</a>
-    <button type="button" id="btnMod" onclick="location.href='/update/{{hotels.id}}'">수정</a>
+    <button type="button" id="btnMod" onclick="location.href='/update/{{hotels.id}}'">수정
+        </a>
         <button type="button" id="btnDel" onclick="location.href='/delete/{{hotels.id}}'">삭제</a>
 </body>
 

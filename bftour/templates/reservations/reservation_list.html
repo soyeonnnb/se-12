@@ -5,12 +5,12 @@
 <h1>예약 내역 보기</h1>
 {% include 'users/partials/navbar.html' %}
 <div>
-    {% for re in reservation_list %}
-    <h3>{{re}}</h3>
-    {% if re.has_reviews %}
+    {% for reservation in reservations %}
+    <h3>{{reservation}}</h3>
+    {% if reservation.has_reviews %}
     <p>작성완료</p>
     {% else %}
-    <a href="{% url 'reviews:create' pk=re.pk %}">리뷰작성</a>
+    <a href="{% url 'reviews:create' pk=reservation.pk %}">리뷰작성</a>
     {% endif %}
     <hr />
     {% endfor %}

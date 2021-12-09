@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block page_title %}예약 페이지{% endblock page_title %}
+{% block content %}
+
+<h1>예약 페이지</h1>
+
+<h3>예약자 정보</h3>
+
+<div>
+  <p>예약자 이름 : {{ user.name }}</p>
+  <p>예약자 이메일 : {{ user.email }}</p>
+  <p>예약자 번호 : {{ user.phone }}</p>
+</div>
+
+<h3>결제 정보</h3>
+{{room}}
+<div>
+  <p>숙소 이름 : {{ room.hotel.title }}</p>
+  <p>객실 이름 : {{ room.room_name }}</p>
+  <p>체크인 : {{ request.reservation.check_in }}</p>
+  <p>체크아웃 : {{ request.reservation.check_out }}</p>
+</div>
+
+<div>
+  <h3>총 결제 금액</h3>
+  <p>{{ room.price }}원</p>
+</div>
+
+
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="payment_agreement" id="flexCheckChecked" checked>
+  <label class="form-check-label" for="flexCheckChecked">
+    (필수) 숙소이용규칙 및 취소/환불규정 동의
+  </label>
+</div>
+<div>
+  <form action="." method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">결제하기</button>
+  </form>
+</div>
+
+
+{% endblock %}
