@@ -15,7 +15,9 @@
 <div class="search-container">
     <h3>Result</h3>
     {% for room in rooms %}
-    <h4>{{room}}</h4>
+    <a href="{% url 'hotels:viewhotel' pk=room.hotel.pk %}">
+        <h4>{{room}}</h4>
+    </a>
     {% endfor %}
 </div>
 
