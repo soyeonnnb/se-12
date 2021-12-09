@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% block page_title %}회원가입{% endblock page_title %}
 {% block content %}
+{% load static %}
 
-<h1>회원가입</h1>
-
-<form action="." method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button>회원가입</button>
-</form>
+<div class="register-container">
+    <form action="." method="POST" class="register-form">
+        <div class="giant-logo">
+            <img src="../../static/images/logo_blue.png"/>
+        </div>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="register-button">회원가입</button>
+    </form>
+</div>
 {% endblock %}
