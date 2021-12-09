@@ -2,14 +2,37 @@
 {% block page_title %}마이페이지{% endblock page_title %}
 {% block content %}
 
-<h1>마이페이지</h1>
-{% include 'users/partials/navbar.html' %}
-<div>
-    <h4>이름 {{user_info.name}}</h4>
-    <h4>아이디 {{user_info.user_id}}</h4>
-    <h4>이메일 {{user_info.email}}</h4>
-    <h4>전화번호 {{user_info.phone}}</h4>
-    <a href="{% url 'users:update' %}">회원정보 수정</a>
+<div class="mypage-container">
+<div class="vertical-container">
+    {% include 'users/partials/navbar.html' %}
 </div>
-<a href="{% url 'users:delete' %}">회원탈퇴</a>
+<div class="my-info">
+    <div class="mypage-text">
+        <h2>마이페이지</h2>
+        <hr/>
+    </div>
+    <div id="data">
+        <span>이름</span>
+        <div class="info-data" id="password">{{user_info.name}}</div>
+    </div>
+    <div id="data">
+        <span>아이디</span>
+        <div class="info-data" id="password">{{user_info.user_id}}</div>
+    </div>
+    <div id="data">
+        <span>이메일</span>
+        <div class="info-data" id="password">{{user_info.email}}</div>
+    </div>
+    <div id="data">
+        <span>전화번호</span>
+        <div class="info-data">{{user_info.phone}}</div>
+    </div>
+    <div class="change-info-link">
+        <a href="{% url 'users:update' %}">회원정보 수정</a>
+    </div>
+    <div class="quit">
+    <a href="{% url 'users:delete' %}" class="quit">회원탈퇴</a>
+        </div>
+</div>
+</div>
 {% endblock %}

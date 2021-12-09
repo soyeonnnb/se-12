@@ -1,12 +1,22 @@
-<h2>Form</h2>
-<form action="{% url 'core:search' %}" method="GET">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button>Submit</button>
-</form>
+{% extends 'base.html' %}
+{% block content %}
 
-<h3>Result</h3>
-{% for room in rooms %}
-<h4>{{room}}</h4>
+<div class="main-form-container">
+    <form action="{% url 'core:search' %}" method="GET" class="main-form">
+        <div class="text-container">
+            <h2>모두를 위한 여행</h2>
+            <p>원하는 호텔을 한 번에 검색해보세요</p>
+        </div>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="search-button">검색</button>
+    </form>
+</div>
+<div class="search-container">
+    <h3>{{type}}이(가) 있는 호텔</h3>
+    {% for hotel in hotels %}
+    {{hotel}}
+    {% endfor %}
+</div>
 
-{% endfor %}
+{% endblock %}

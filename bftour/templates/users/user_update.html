@@ -1,16 +1,32 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block page_title %}회원 정보 수정{% endblock page_title %}
 {% block content %}
 
 
-<h1>회원 정보 수정</h1>
-{% include 'users/partials/navbar.html' %}
-
-<form action="." method="POST">
-    {% csrf_token %}
-    <h4>회원 아이디: {{user.user_id}}</h4>
-    {{form.as_p}}
-    <button>회원 정보 수정</button>
-</form>
-<a href="{% url 'users:update_password' %}">비밀번호 수정</a>
+<div class="mypage-container">
+    <div class="vertical-container">
+        {% include 'users/partials/navbar.html' %}
+    </div>
+    <div class="my-info">
+        <div class="mypage-text">
+            <h2>회원 정보 수정</h2>
+            <hr/>
+        </div>
+        <form action="." method="POST">
+            {% csrf_token %}
+            <div id="data">
+                <span>회원 아이디</span>
+                <div class="info-data">{{user.user_id}}</div>
+            </div>
+            <div id="data">
+                {{form.as_p}}
+            </div>
+            <div id="data">
+                <a href="{% url 'users:update_password' %}">비밀번호 수정</a>
+            </div>
+            <button class="change-info-link">회원 정보 수정</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
