@@ -21,10 +21,7 @@ from rooms import models as rooms_model
 
 from users import mixins as user_mixin
 
-<<<<<<< HEAD
 
-=======
->>>>>>> d07ec9aa931c2682d2285718f5fc9398fc8e0807
 @login_required
 def view_reservations(request):
     user = request.user
@@ -63,6 +60,7 @@ class CreateReservationView(user_mixin.LoggedInOnlyView, CreateView):
         messages.success(self.request, "Reservation Added Successfully")
         return reverse_lazy("reservations:reservation_list")
 
+
 # 예약 수정
 class UpdateReservationView(user_mixin.LoggedInOnlyView, UpdateView):
     model = models.Reservation
@@ -76,6 +74,8 @@ class UpdateReservationView(user_mixin.LoggedInOnlyView, UpdateView):
         context["reservation"] = models.Reservation.objects.get(pk=self.kwargs["pk"])
         # .reservation
         return context
+
+
 # 예약 삭제
 class DeleteReservationView(user_mixin.LoggedInOnlyView, DeleteView):
 
