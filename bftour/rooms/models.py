@@ -9,7 +9,10 @@ class Room(models.Model):
     hotel = models.ForeignKey(
         "hotels.Hotel", on_delete=models.CASCADE, related_name="rooms"
     )
-    name = models.CharField(max_length=255)
-
+    
+    room_name = models.CharField(max_length=50, default="")
+    price = models.CharField(max_length=50, default="") 
+    
     def __str__(self):
-        return f"{self.hotel} - {self.name}"
+        return self.room_name
+
