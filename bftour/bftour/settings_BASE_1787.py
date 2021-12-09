@@ -29,6 +29,7 @@ DJANGO_APPS = [
 
 PROJECT_APPS = [
     "hotels.apps.HotelsConfig",
+    "payments.apps.PaymentsConfig",
     "reservations.apps.ReservationsConfig",
     "reviews.apps.ReviewsConfig",
     "rooms.apps.RoomsConfig",

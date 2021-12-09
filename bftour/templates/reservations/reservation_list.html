@@ -3,6 +3,7 @@
 {% block content %}
 
 <h1>예약 내역 보기</h1>
+<<<<<<< HEAD
 {% include 'users/partials/navbar.html' %}
 <div>
     {% for reservation in reservations %}
@@ -12,6 +13,12 @@
     {% else %}
     <a href="{% url 'reviews:create' pk=reservation.pk %}">리뷰작성</a>
     {% endif %}
+=======
+
+<div>
+    {% for res in reservation_list %}
+    <h3>{{res}}</h3>
+>>>>>>> d07ec9aa931c2682d2285718f5fc9398fc8e0807
     <hr />
     {% endfor %}
 </div>
