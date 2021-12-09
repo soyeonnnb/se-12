@@ -88,12 +88,3 @@ class DeleteReservationView(user_mixin.LoggedInOnlyView, DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
-    
-
-        
-        
-
-    
-
-
-

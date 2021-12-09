@@ -6,26 +6,28 @@ from django.conf import settings
 
 from core import models as core_models
 
+
 class Reservation(core_models.TimeStampedModel):
 
     """Reservation Model Definition"""
+
     check_in = models.DateField()
     check_out = models.DateField()
-    
+
     request = models.TextField()
-    
+
     user = models.ForeignKey(
         "users.User", related_name="reservations", on_delete=models.CASCADE
     )
-    
+
     room = models.ForeignKey(
         "rooms.Room", related_name="reservations", on_delete=models.CASCADE
     )
-    
+
     hotel = models.ForeignKey(
         "hotels.Hotel", related_name="reservations", on_delete=models.CASCADE
     )
-    
+
     PAYMENT_CREDITCARD = "credit_card"
     PAYMENT_VIRTUALACCOUNT = "virtual_account"
     PAYMENT_TRANSFERACCOUNT = "transfer_account"
@@ -46,8 +48,20 @@ class Reservation(core_models.TimeStampedModel):
         (PAYMENT_PAYCO, "PAYCO"),
     )
 
-    payment = models.CharField(
-       max_length=200, choices=PAYMENT_CHOICES
+    payment = models.CharField(max_length=200, choices=PAYMENT_CHOICES)
+    
+    STATUS_PENDING = "pending"
+    STATUS_CONFIRMED = "confirmed"
+    STATUS_CANCELED = "canceled"
+
+    STATUS_CHOICES = (
+        (STATUS_PENDING, "Pending"),
+        (STATUS_CONFIRMED, "Confirmed"),
+        (STATUS_CANCELED, "Canceled"),
+    )
+
+    status = models.CharField(
+        max_length=12, choices=STATUS_CHOICES, default=STATUS_PENDING
     )
 
     def __str__(self):
@@ -57,3 +71,8 @@ class Reservation(core_models.TimeStampedModel):
     def has_reviews(self):
         all_reviews = self.reviews.all()
         return len(all_reviews) > 0
+
+
+
+
+    

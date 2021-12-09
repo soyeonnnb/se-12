@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.urls import reverse_lazy
 
 # Create your models here.
 
@@ -22,7 +23,10 @@ class Hotel(models.Model):
     place = models.TextField()
     address = models.CharField(max_length=255)
     # type = 체크박스
-    type = models.ManyToManyField("RoomType", related_name="hotels", blank=True)
+    type = models.ManyToManyField(
+        "RoomType", related_name="hotels", null=True, blank=True
+    )
+    facility = models.CharField(max_length=50, default="")
     start_dt = models.DateTimeField("date published")
     end_dt = models.DateTimeField("date published")
     pro_price = models.IntegerField(default=0, validators=[MinValueValidator(0)])
@@ -37,10 +41,14 @@ class Hotel(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        url = reverse_lazy("detail", kwargs={"pk": self.pk})
+        return url
+
 
 class RoomType(models.Model):
 
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=60, default="")
 
     def __str__(self):
         return self.name

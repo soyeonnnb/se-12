@@ -24,7 +24,7 @@ class LoginForm(forms.Form):
             self.add_error("user_id", forms.ValidationError("아이디가 존재하지 않습니다."))
 
 
-# 회원가입 Form 
+# 회원가입 Form
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = models.User
@@ -73,5 +73,5 @@ class UserUpdateForm(forms.ModelForm):
         fields = (
             "name",
             "phone",
-            "email", 
+            "email",
         )
