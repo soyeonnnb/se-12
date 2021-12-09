@@ -5,6 +5,9 @@
         <img src="{%static 'images/logo_white.png' %}" />
     </div>
     {% if user.is_authenticated %}
+    {% if user.is_host %}
+    <a href="#">staff</a>
+    {% endif %}
     <a href="{% url 'users:logout' %}">로그아웃</a>
     <a href="{% url 'users:mypage' %}">마이페이지</a>
     {% else %}
