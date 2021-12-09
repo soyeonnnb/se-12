@@ -20,7 +20,7 @@ class Hotel(models.Model):
     mem_seq = models.ForeignKey("users.User", on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     contents = models.TextField()
-    place = models.TextField()
+    #place = models.TextField()
     address = models.CharField(max_length=255)
     # type = 체크박스
     type = models.ManyToManyField(
