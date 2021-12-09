@@ -31,7 +31,6 @@ class SearchView(View):
                 if text:
                     n_rooms = n_rooms.filter(
                         Q(hotel__title__icontains=text)
-                        | Q(hotel__place__icontains=text)
                         | Q(hotel__address__icontains=text)
                     )
                 type_args = {}

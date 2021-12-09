@@ -2,11 +2,18 @@
 {% block page_title %}로그인{% endblock page_title %}
 {% block content %}
 
-<h1>로그인</h1>
+<div class="login-container">
+    <form action="." method="POST" class="login-form">
+        {% csrf_token %}
+        <div class="giant-logo">
+            <img src="../../static/images/logo_blue.png" />
+        </div>
+        {{form.as_p}}
+        <button class="login-button">로그인</button>
+        <div class="go-register">
+            <p>아직 계정이 없으신가요? | <span><a href="{% url 'users:register' %}" class="register-link">회원가입</a></span></p>
+        </div>
+    </form>
 
-<form action="." method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button>Login</button>
-</form>
+</div>
 {% endblock %}
