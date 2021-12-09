@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="main-form-container">
-    <form action="{% url 'core:search' %}" method="post" class="main-form">
+    <form action="{% url 'core:search' %}" method="GET" class="main-form">
         {% csrf_token %}
         <div class="text-container">
             <h2>모두를 위한 여행</h2>

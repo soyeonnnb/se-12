@@ -10,10 +10,6 @@ from . import forms
 from . import models
 from . import mixins
 
-# 아직 home이 없어서 user home을 만들어 주었음
-def home(request):
-    return render(request, "users/home.html")
-
 
 # login view
 class Login(View):
@@ -29,14 +25,14 @@ class Login(View):
             user = authenticate(request, user_id=user_id, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(reverse("users:home"))
+                return redirect(reverse("core:home"))
         return render(request, "users/login.html", {"form": form})
 
 
 # Logout view
 def logout_view(request):
     logout(request)
-    return redirect(reverse_lazy("users:home"))
+    return redirect(reverse_lazy("core:home"))
 
 
 # 회원가입
@@ -44,7 +40,7 @@ class Register(FormView):
 
     template_name = "users/register.html"
     form_class = forms.RegisterForm
-    success_url = reverse_lazy("users:home")
+    success_url = reverse_lazy("core:home")
 
     def form_valid(self, form):
         form.save()
@@ -82,7 +78,7 @@ def user_withdrawal(request):
     user = request.user
     user.delete()
     logout(request)
-    return redirect(reverse_lazy("users:home"))
+    return redirect(reverse_lazy("core:home"))
 
 
 # 비밀번호 변경
