@@ -5,10 +5,10 @@
 
 <div class="register-container">
     <form action="." method="POST" class="register-form">
-        <div class="giant-logo">
-            <img src="../../static/images/logo_blue.png"/>
-        </div>
         {% csrf_token %}
+        <div class="giant-logo">
+            <img src="../../static/images/logo_blue.png" />
+        </div>
         {{form.as_p}}
         <button class="register-button">회원가입</button>
     </form>

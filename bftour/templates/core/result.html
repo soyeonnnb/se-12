@@ -3,11 +3,11 @@
 
 <div class="main-form-container">
     <form action="{% url 'core:search' %}" method="GET" class="main-form">
+        {% csrf_token %}
         <div class="text-container">
             <h2>모두를 위한 여행</h2>
             <p>원하는 호텔을 한 번에 검색해보세요</p>
         </div>
-        {% csrf_token %}
         {{form.as_p}}
         <button class="search-button">검색</button>
     </form>
