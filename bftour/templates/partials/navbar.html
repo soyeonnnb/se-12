@@ -2,7 +2,7 @@
 
 <div class="navbar">
     <div class="logo-container">
-        <img src="{%static 'images/logo_white.png' %}"/>
+        <img src="{%static 'images/logo_white.png' %}" />
     </div>
     {% if user.is_authenticated %}
     <a href="{% url 'users:logout' %}">로그아웃</a>
