@@ -57,19 +57,3 @@ class Reservation(core_models.TimeStampedModel):
     def has_reviews(self):
         all_reviews = self.reviews.all()
         return len(all_reviews) > 0
-    
-# class ReservationStatus(models.Model):
-    
-#     STATUS_PENDING = "pending"
-#     STATUS_CONFIRMED = "confirmed"
-#     STATUS_CANCELED = "canceled"
-
-#     STATUS_CHOICES = (
-#         (STATUS_PENDING, "Pending"),
-#         (STATUS_CONFIRMED, "Confirmed"),
-#         (STATUS_CANCELED, "Canceled"),
-#     )
-
-#     status = models.CharField(
-#         max_length=12, choices=STATUS_CHOICES, default=STATUS_PENDING
-#     )

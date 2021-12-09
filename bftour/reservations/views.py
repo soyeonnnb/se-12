@@ -13,53 +13,18 @@ from . import forms
 
 from users import mixins as user_mixin
 
-#For booking the room
-
-# # 상품 예약
-# @login_required(login_url='/user')
-# def make_reservation(request):
-#     if request.method =="POST":
-
-#         room_id = request.POST['room_id']
-        
-#         room = Room.objects.all().get(room_name)
-#         #for finding the reserved rooms on this time period for excluding from the query set
-#         for each_reservation in Reservation.objects.all().filter(room = room):
-#             if str(each_reservation.check_in) < str(request.POST['check_in']) and str(each_reservation.check_out) < str(request.POST['check_out']):
-#                 pass
-#             elif str(each_reservation.check_in) > str(request.POST['check_in']) and str(each_reservation.check_out) > str(request.POST['check_out']):
-#                 pass
-#             else:
-#                 messages.warning(request,"Sorry This Room is unavailable for Booking")
-#                 return redirect("homepage")
-            
-#         current_user = request.user
-#         reservation_id = str(room_id) + str(datetime.datetime.now())
-
-#         reservation = Reservation()
-#         room_object = Room.objects.all().get(id=room_id)
-#         room_object.status = '2'
-        
-#         user_object = User.objects.all().get(username=current_user)
-
-#         Reservation.user = user_object
-#         Reservation.room = room_object
-#         Reservation.check_in = request.POST['check_in']
-#         Reservation.check_out = request.POST['check_out']
-
-#         Reservation.save()
-
-#         messages.success(request,"Congratulations! Booking Successfull")
-
-#         return redirect("homepage")
-#     else:
-#         return HttpResponse('Access Denied')
-
+@login_required
+def view_reservations(request):
+    user = request.user
+    reservation_list = models.Reservation.objects.filter(user=user)
+    return render(
+        request, "reservations/reservation_list.html", {"reservations": reservation_list}
+    )
+    
 class CreateReservationView(user_mixin.LoggedInOnlyView, CreateView):
     model = models.Reservation 
     context_object_name = "reservation"
-    form_calss = forms.ReservationForm
-    success_url = reverse_lazy("reviews:reservation")
+    form_class = forms.ReservationForm
     template_name = "reservations/reservation_form.html"
     
     def form_valid(self, form):
@@ -69,7 +34,7 @@ class CreateReservationView(user_mixin.LoggedInOnlyView, CreateView):
 
     def get_success_url(self):
         messages.success(self.request, 'Reservation Added Successfully')
-        return reverse("reviews:reservation")
+        return reverse("reservations:reservation_list")
     
     # def get_form_kwargs(self):
     #     kwargs = super(CreateReservationView, self).get_form_kwargs()
@@ -102,7 +67,7 @@ class CreateReservationView(user_mixin.LoggedInOnlyView, CreateView):
 class UpdateReservationView(user_mixin.LoggedInOnlyView, UpdateView):
     model = models.Reservation 
     form_class = forms.ReservationForm
-    success_url = reverse_lazy("reviews:reservation")
+    success_url = reverse_lazy("reservations:reservation_list")
     template_name = "reservations/reservation_form.html"
 
     def get_context_data(self, **kwargs):
@@ -112,7 +77,7 @@ class UpdateReservationView(user_mixin.LoggedInOnlyView, UpdateView):
         # .reservation
         return context
     
-# 예약 삭제 (코드작성완료)
+# 예약 삭제
 class DeleteReservationView(user_mixin.LoggedInOnlyView, DeleteView):
 
     model = models.Reservation 
