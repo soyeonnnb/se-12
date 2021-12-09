@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="main-form-container">
-    <form action="{% url 'core:search' %}" method="GET" class="main-form">
+    <form action="{% url 'core:search' %}" method="post" class="main-form">
         {% csrf_token %}
         <div class="text-container">
             <h2>모두를 위한 여행</h2>
@@ -13,10 +13,9 @@
     </form>
 </div>
 <div class="search-container">
-    <h3>{{type}}이(가) 있는 호텔</h3>
-    {% for hotel in hotels %}
-    {{hotel}}
-    {% endfor %}
+    <h3>Result</h3>
+    {% for room in rooms %}
+    <h4>{{room}}</h4>
 </div>
 
 {% endblock %}
