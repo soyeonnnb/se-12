@@ -15,7 +15,7 @@ def makehotels(request):
     if request.method == "POST":
         form = MakeHotel(request.POST, request.FILES)
         form2 = MakeRoom(request.POST)
-
+        
         if form.is_valid():
             forms = form.save(commit=False)
             forms.facility = request.POST.getlist("types[]")
@@ -30,11 +30,11 @@ def makehotels(request):
             forms2.user_id = request.user.id
             forms2.save()
 
+       
         return redirect("/hotels/index")
     else:
         form = MakeHotel()
         form2 = MakeRoom()
-
     return render(request, "hotels/makehotel.html", {"form": form, "form2": form2})
 
 

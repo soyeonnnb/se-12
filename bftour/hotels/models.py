@@ -26,7 +26,7 @@ class Hotel(models.Model):
     type = models.ManyToManyField(
         "RoomType", related_name="hotels", null=True, blank=True
     )
-    facility = models.CharField(max_length=50, default="")
+    #facility = models.CharField(max_length=50, default="")
     start_dt = models.DateTimeField("date published")
     end_dt = models.DateTimeField("date published")
     #pro_price = models.IntegerField(default=0, validators=[MinValueValidator(0)])
