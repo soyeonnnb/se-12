@@ -1,4 +1,3 @@
-
 <head>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -9,54 +8,55 @@
     <form method="POST" id="hotel" enctype="multipart/form-data" class="post-form my-3">
         {% csrf_token %}
         {{ form.as_p }}
-        {{check.as_p}
-        <p><label><h3>객실 추가</h3></label>
-            <div id="roomList">
-                {{ form2.as_p }}
-            </div>
+        <p><label>
+                <h3>객실 추가</h3>
+            </label>
+        <div id="roomList">
+            {{ form2.as_p }}
+        </div>
         <button type="button" id="room" value="" onclick="board.fn_roomPlus();">객실 추가</button>
 
-        
-        </p> 
+
+        </p>
         <input type="hidden" name="roomNm" id="roomNm" value="">
         <input type="hidden" name="room_price" id="roomPrice" value="">
-        
+
         <button type="button" class="btn btn-primary" onclick="board.fn_save();">저장하기</button>
     </form>
 </div>
 <script type="text/javascript">
-    
+
     let board = {
 
-        fn_roomPlus : function(){
+        fn_roomPlus: function () {
             var appendHtml = '';
-        
-            appendHtml +='<p><label for="id_room_name">객실 이름:</label>';    
-            appendHtml +='<input type="text" name="room_name" maxlength="50" required id="id_room_name"></p>';        
-            appendHtml +='<p><label for="id_price">객실 가격:</label>  <input type="text" name="price" maxlength="50" required id="id_price"></p>';    
-           
+
+            appendHtml += '<p><label for="id_room_name">객실 이름:</label>';
+            appendHtml += '<input type="text" name="room_name" maxlength="50" required id="id_room_name"></p>';
+            appendHtml += '<p><label for="id_price">객실 가격:</label>  <input type="text" name="price" maxlength="50" required id="id_price"></p>';
+
             $('#roomList').append(appendHtml);
 
         },
-        fn_save : function(){
+        fn_save: function () {
             var rl = $("input[name=room_name]").length;
-		    var roomNm = new Array(rl);
-		    for(var i=0; i<rl; i++){                          
-			    roomNm[i] = $("input[name=room_name]").eq(i).val();
+            var roomNm = new Array(rl);
+            for (var i = 0; i < rl; i++) {
+                roomNm[i] = $("input[name=room_name]").eq(i).val();
             }
             $('#roomNm').val(roomNm);
 
             var rp = $("input[name=price]").length;
-		    var roomPrice = new Array(rp);
-		    for(var i=0; i<rp; i++){                          
-			    roomPrice[i] = $("input[name=price]").eq(i).val();
-             }
+            var roomPrice = new Array(rp);
+            for (var i = 0; i < rp; i++) {
+                roomPrice[i] = $("input[name=price]").eq(i).val();
+            }
             $('#roomPrice').val(roomPrice);
             console.log(roomNm);
             console.log(roomPrice);
-            $('#hotel').submit(); 
+            $('#hotel').submit();
         }
-    }   
+    }
 
 
 </script>

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.core.paginator import Paginator
 from django.db.models import Q
-
+import datetime
 from . import forms
 from hotels import models as hotels_model
 from reservations import models as reservations_model
@@ -13,9 +13,16 @@ def home(request):
     form = forms.SearchForm()
     type = hotels_model.RoomType.objects.first()
     hotels = hotels_model.Hotel.objects.filter(type=type)
-    return render(
-        request, "core/home.html", {"form": form, "type": type, "hotels": hotels}
-    )
+    check_in = datetime.date.today()
+    check_out = datetime.date.today() + datetime.timedelta(days=1)
+    kwargs = {
+        "form": form,
+        "type": type,
+        "hotels": hotels,
+        "check_in": check_in,
+        "check_out": check_out,
+    }
+    return render(request, "core/home.html", kwargs)
 
 
 class SearchView(View):
@@ -25,8 +32,8 @@ class SearchView(View):
             if form.is_valid():
                 text = form.cleaned_data.get("text")
                 types = form.cleaned_data.get("types")
-                start = form.cleaned_data.get("start")
-                end = form.cleaned_data.get("end")
+                check_in = form.cleaned_data.get("start")
+                check_out = form.cleaned_data.get("end")
                 n_rooms = rooms_model.Room.objects.all().order_by("hotel__reg_dt")
                 if text:
                     n_rooms = n_rooms.filter(
@@ -38,7 +45,7 @@ class SearchView(View):
                     type_args["hotel__type"] = type
                 n_rooms = n_rooms.filter(**type_args)
                 date_args = dict(
-                    check_in__lte=end, check_out__gte=start
+                    check_in__lte=check_out, check_out__gte=check_in
                 )  # just for redability
                 for room in n_rooms:
                     is_occupied = reservations_model.Reservation.objects.filter(
@@ -53,7 +60,12 @@ class SearchView(View):
                 return render(
                     request,
                     "core/result.html",
-                    {"form": form, "rooms": rooms},
+                    {
+                        "form": form,
+                        "rooms": rooms,
+                        "check_in": check_in,
+                        "check_out": check_out,
+                    },
                 )
         else:
             form = forms.SearchForm()

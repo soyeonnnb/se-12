@@ -97,8 +97,9 @@ class Reservation(core_models.TimeStampedModel):
 
     def save(self, *args, **kwargs):
         if self.pk is None:
-            start = self.check_in
-            end = self.check_out
+            print(type(self.check_in))
+            start = datetime.datetime.strptime(self.check_in, "%Y-%m-%d").date()
+            end = datetime.datetime.strptime(self.check_out, "%Y-%m-%d").date()
             difference = end - start
             existing_booked_day = BookedDay.objects.filter(
                 day__range=(start, end)

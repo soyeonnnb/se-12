@@ -22,7 +22,9 @@
                 {% for hotel in hotels %}
                 <tr>
                     <td>{{hotel.id}}번</td>
-                    <td><a href="{{hotel.pk}}/">{{hotel.title}}</a></td>
+                    <td><a
+                            href="{% url 'hotels:viewhotel' hotel_pk=hotel.pk check_in=check_in check_out=check_out%}">{{hotel.title}}</a>
+                    </td>
                     {% if hotel.thumb_file %}
                     <td><img src={{hotel.thumb_file.url}} style="width:60px; height:60px" /></td>
                     {% endif %}
