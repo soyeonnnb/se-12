@@ -13,7 +13,6 @@ class MakeHotel(forms.ModelForm):
             "address",
             "start_dt",
             "end_dt",
-            "pro_price",
             "thumb_file",
         ]
         labels = {
@@ -23,7 +22,6 @@ class MakeHotel(forms.ModelForm):
             "address": "주소",
             "start_dt": "상품시작일",
             "end_dt": "상품종료일",
-            "pro_price": "상품가격",
             "thumb_file": "상품이미지",
         }
 

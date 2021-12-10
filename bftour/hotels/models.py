@@ -22,14 +22,14 @@ class Hotel(models.Model):
     contents = models.TextField()
     #place = models.TextField()
     address = models.CharField(max_length=255)
-    # type = 체크박스
+    # type = 체크박스w
     type = models.ManyToManyField(
         "RoomType", related_name="hotels", null=True, blank=True
     )
     facility = models.CharField(max_length=50, default="")
     start_dt = models.DateTimeField("date published")
     end_dt = models.DateTimeField("date published")
-    pro_price = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    #pro_price = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     reg_dt = models.DateTimeField(auto_now_add=True)
     reg_id = models.CharField(max_length=50, default="admin")
     thumb_file = models.ImageField(

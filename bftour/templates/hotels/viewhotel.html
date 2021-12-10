@@ -10,18 +10,18 @@
     <h1>게시글 개별 페이지입니다</h1>
     <p>{{hotels.title}}</p>
     <p>{{hotels.contents}}</p>
-    <p>{{hotels.place}}</p>
+  
     <p>{{hotels.address}}</p>
-    <p>{{hotels.start_dt}}</p>
-    <p>{{hotels.end_dt}}</p>
-    <p>{{hotels.pro_price}}</p>
-    <p>{{hotels.reg_dt}}</p>
+    <p>{{hotels.start_dt|date:'Y-m-d'}}</p>
+    <p>{{hotels.end_dt|date:'Y-m-d'}}</p>
+    <p>{{hotels.reg_dt|date:'Y-m-d'}}}</p>
 
 
 
     {% if hotel.thumb_file %}
     <img src={{hotels.thumb_file.url}} style="width:60px; height:60px" />
     {% endif %}
+
     <h1>객실 정보</h1>
     {% for item in rooms %}
     <p>{{item.room_name}}</p>
