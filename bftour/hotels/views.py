@@ -19,7 +19,7 @@ def makehotels(request):
         if form.is_valid():
             forms = form.save(commit=False)
             forms.facility = request.POST.getlist("types[]")
-            forms.reg_id = request.user.id
+            forms.reg_id = request.user.name
             forms.save()
 
         if form2.is_valid():
@@ -30,7 +30,7 @@ def makehotels(request):
             forms2.user_id = request.user.id
             forms2.save()
 
-        return redirect("/index")
+        return redirect("/hotels/index")
     else:
         form = MakeHotel()
         form2 = MakeRoom()
@@ -41,7 +41,7 @@ def makehotels(request):
 def viewhotel(request, pk):
     # 게시글(Post) 중 pk(primary_key)를 이용해 하나의 게시글(post)를 검색
     hotels = Hotel.objects.get(pk=pk)
-    rooms = Room.objects.filter(hotel=pk)
+    rooms = Room.objects.filter(hotel_id=pk)
     # posting.html 페이지를 열 때, 찾아낸 게시글(post)을 post라는 이름으로 가져옴
     return render(request, "hotels/viewhotel.html", {"hotels": hotels, "rooms": rooms})
 
