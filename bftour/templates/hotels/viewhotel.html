@@ -1,97 +1,102 @@
 <html>
-    <head>
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <title>Posting!</title>
-    </head>
-    <body>
-        <h1>게시글 개별 페이지입니다</h1>
-        <p>{{hotels.title}}</p>
-        <p>{{hotels.contents}}</p>
-        <p>{{hotels.place}}</p>
-        <p>{{hotels.address}}</p>
-        <p>{{hotels.start_dt}}</p>
-        <p>{{hotels.end_dt}}</p>
-        <p>{{hotels.pro_price}}</p>
-        <p>{{hotels.reg_dt}}</p>
 
-        
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>Posting!</title>
+</head>
 
-        <img src={{hotels.thumb_file.url}} style="width:60px; height:60px"/>
-        <h1>객실 정보</h1>
-        {% for item in rooms %}
-            <p>{{item.room_name}}</p>
-            <p>{{item.price}}</p>
-        {% endfor %}
+<body>
+    <h1>게시글 개별 페이지입니다</h1>
+    <p>{{hotels.title}}</p>
+    <p>{{hotels.contents}}</p>
+    <p>{{hotels.place}}</p>
+    <p>{{hotels.address}}</p>
+    <p>{{hotels.start_dt}}</p>
+    <p>{{hotels.end_dt}}</p>
+    <p>{{hotels.pro_price}}</p>
+    <p>{{hotels.reg_dt}}</p>
 
-        <h1>편의 시설</h1>
-        <input type="hidden" name="types[]" id="na" value="{{hotels.facility}}">
 
-        <p> 
-            <li><label for="id_types_0"><input type="checkbox" name="types[]" value="1" id="id_types_0">
-         장애인 전용 객실</label>
-        
+
+    {% if hotel.thumb_file %}
+    <img src={{hotels.thumb_file.url}} style="width:60px; height:60px" />
+    {% endif %}
+    <h1>객실 정보</h1>
+    {% for item in rooms %}
+    <p>{{item.room_name}}</p>
+    <p>{{item.price}}</p>
+    <a href="{% url 'reservations:reservate' room_pk=item.pk %}">예약하기</a>
+    {% endfor %}
+    <h1>편의 시설</h1>
+    <input type="hidden" name="types[]" id="na" value="{{hotels.facility}}">
+
+    <p>
+        <li><label for="id_types_0"><input type="checkbox" name="types[]" value="1" id="id_types_0">
+                장애인 전용 객실</label>
+
         </li>
-            <li><label for="id_types_1"><input type="checkbox" name="types[]" value="2" id="id_types_1">
-         장애인 전용 화장실</label>
-        
+        <li><label for="id_types_1"><input type="checkbox" name="types[]" value="2" id="id_types_1">
+                장애인 전용 화장실</label>
+
         </li>
-            <li><label for="id_types_2"><input type="checkbox" name="types[]" value="3" id="id_types_2">
-         장애인 전용 주차구역</label>
-        
+        <li><label for="id_types_2"><input type="checkbox" name="types[]" value="3" id="id_types_2">
+                장애인 전용 주차구역</label>
+
         </li>
-            <li><label for="id_types_3"><input type="checkbox" name="types[]" value="4" id="id_types_3">
-         장애인 전용 엘레베이터</label>
-        
+        <li><label for="id_types_3"><input type="checkbox" name="types[]" value="4" id="id_types_3">
+                장애인 전용 엘레베이터</label>
+
         </li>
-            <li><label for="id_types_4"><input type="checkbox" name="types[]" value="5" id="id_types_4">
-         주출입구 단차 없음</label>
-        
+        <li><label for="id_types_4"><input type="checkbox" name="types[]" value="5" id="id_types_4">
+                주출입구 단차 없음</label>
+
         </li>
-            <li><label for="id_types_5"><input type="checkbox" name="types[]" value="7" id="id_types_5">
-         휠체어 대여 가능</label>
-        
+        <li><label for="id_types_5"><input type="checkbox" name="types[]" value="7" id="id_types_5">
+                휠체어 대여 가능</label>
+
         </li>
-            <li><label for="id_types_6"><input type="checkbox" name="types[]" value="8" id="id_types_6">
-         휠체어 사용자 접근 가능</label>
-        
+        <li><label for="id_types_6"><input type="checkbox" name="types[]" value="8" id="id_types_6">
+                휠체어 사용자 접근 가능</label>
+
         </li>
-            <li><label for="id_types_7"><input type="checkbox" name="types[]" value="9" id="id_types_7">
-         장애인 보조기기 제공</label>
-        
+        <li><label for="id_types_7"><input type="checkbox" name="types[]" value="9" id="id_types_7">
+                장애인 보조기기 제공</label>
+
         </li>
-            <li><label for="id_types_8"><input type="checkbox" name="types[]" value="10" id="id_types_8">
-         시각 장애인 접근성</label>
-        
+        <li><label for="id_types_8"><input type="checkbox" name="types[]" value="10" id="id_types_8">
+                시각 장애인 접근성</label>
+
         </li>
-            <li><label for="id_types_9"><input type="checkbox" name="types[]" value="12" id="id_types_9">
-         청각장애인 접근성</label>
+        <li><label for="id_types_9"><input type="checkbox" name="types[]" value="12" id="id_types_9">
+                청각장애인 접근성</label>
         </li>
-        </p>
-        
-        <a href="/index">목록</a> 
-        <a href="/index">예약</a> 
-        <button type="button" id="btnMod" onclick="location.href='/update/{{hotels.id}}'">수정</a> 
-        <button type="button" id="btnDel" onclick="location.href='/delete/{{hotels.id}}'">삭제</a> 
-    </body>
-    
+    </p>
+
+    <a href="/index">목록</a>
+    <a href="/index">예약</a>
+    <button type="button" id="btnMod" onclick="location.href='/update/{{hotels.id}}'">수정
+        </a>
+        <button type="button" id="btnDel" onclick="location.href='/delete/{{hotels.id}}'">삭제</a>
+</body>
+
 </html>
 <script type="text/javascript">
     var check = $('#na').val();
     console.log(check.length);
-    
-    for (var i in check){
+
+    for (var i in check) {
         console.log(check[i]);
         if (check[i] == '1') $('input:checkbox[id="id_types_0"]').prop("checked", true);
-        else if(check[i] == '2') $('input:checkbox[id="id_types_1"]').prop("checked", true);
-        else if(check[i] == '3') $('input:checkbox[id="id_types_2"]').prop("checked", true);
-        else if(check[i] == '4') $('input:checkbox[id="id_types_3"]').prop("checked", true);
-        else if(check[i] == '5') $('input:checkbox[id="id_types_4"]').prop("checked", true);
-        else if(check[i] == '6') $('input:checkbox[id="id_types_5"]').prop("checked", true);
-        else if(check[i] == '7') $('input:checkbox[id="id_types_6"]').prop("checked", true);
-        else if(check[i] == '8') $('input:checkbox[id="id_types_7"]').prop("checked", true);
-        else if(check[i] == '9') $('input:checkbox[id="id_types_8"]').prop("checked", true);
-        else if(check[i] == '10') $('input:checkbox[id="id_types_9"]').prop("checked", true);
+        else if (check[i] == '2') $('input:checkbox[id="id_types_1"]').prop("checked", true);
+        else if (check[i] == '3') $('input:checkbox[id="id_types_2"]').prop("checked", true);
+        else if (check[i] == '4') $('input:checkbox[id="id_types_3"]').prop("checked", true);
+        else if (check[i] == '5') $('input:checkbox[id="id_types_4"]').prop("checked", true);
+        else if (check[i] == '6') $('input:checkbox[id="id_types_5"]').prop("checked", true);
+        else if (check[i] == '7') $('input:checkbox[id="id_types_6"]').prop("checked", true);
+        else if (check[i] == '8') $('input:checkbox[id="id_types_7"]').prop("checked", true);
+        else if (check[i] == '9') $('input:checkbox[id="id_types_8"]').prop("checked", true);
+        else if (check[i] == '10') $('input:checkbox[id="id_types_9"]').prop("checked", true);
     }
-    
+
 </script>

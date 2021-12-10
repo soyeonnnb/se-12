@@ -16,7 +16,9 @@
 <div class="search-container">
     <h3>{{type}}이(가) 있는 호텔</h3>
     {% for hotel in hotels %}
-    {{hotel}}
+    <a href="{% url 'hotels:viewhotel' pk=hotel.pk %}">
+        {{hotel}}
+    </a>
     {% endfor %}
 </div>
 {% endblock %}
