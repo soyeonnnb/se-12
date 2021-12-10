@@ -57,8 +57,6 @@ def deletehotel(request, pk):
 def updatehotel(request, pk):
     hotel = get_object_or_404(Hotel, pk=pk)
     room = get_object_or_404(Room, hotel_id=pk)
-    hotels = Hotel.objects.get(id=pk)
-
     if request.method == "POST":
         form = MakeHotel(request.POST, request.FILES, instance=hotel)
         form2 = MakeRoom(request.POST, instance=room)
