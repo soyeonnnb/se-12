@@ -2,8 +2,6 @@ from django import forms
 from .models import Hotel, RoomType
 from rooms.models import Room
 
-from . import models
-
 
 class MakeHotel(forms.ModelForm):
     class Meta:
@@ -28,7 +26,7 @@ class MakeHotel(forms.ModelForm):
         }
 
     type = forms.ModelMultipleChoiceField(
-        queryset=models.RoomType.objects.all(), widget=forms.CheckboxSelectMultiple
+        queryset=RoomType.objects.all(), widget=forms.CheckboxSelectMultiple
     )
 
 

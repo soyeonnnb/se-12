@@ -29,6 +29,7 @@ def makehotels(request):
             forms.mem_seq = request.user
             forms.reg_id = request.user.name
             forms.save()
+            form.save_m2m()
 
         if form2.is_valid():
             forms2 = form2.save(commit=False)
@@ -38,7 +39,7 @@ def makehotels(request):
             forms2.user_id = request.user.id
             forms2.save()
 
-        return redirect("/hotels/index")
+        return redirect("hotels:index")
     else:
         form = MakeHotel()
         form2 = MakeRoom()

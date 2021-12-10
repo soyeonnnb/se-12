@@ -91,7 +91,11 @@
         <p>호텔 끝 : {{hotels.end_dt}}</p>
         <p>호텔 가격 : {{hotels.pro_price}}</p>
         <p>호텔 등록일 : {{hotels.reg_dt}}</p>
+        <div>호텔 옵션: {% for type in hotels.type.all%}
+                <p>{{type}}</p>
+                {% endfor %}
 
+        </div>
 
 
         {% if hotel.thumb_file %}
