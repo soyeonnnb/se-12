@@ -44,6 +44,8 @@ class CreateReservationView(user_mixin.LoggedInOnlyView, CreateView):
         context = super(CreateReservationView, self).get_context_data(**kwargs)
         context["page_name"] = "예약 하기"
         context["room"] = rooms_model.Room.objects.get(pk=self.kwargs["room_pk"])
+        context["check_in"] = self.kwargs["check_in"]
+        context["check_out"] = self.kwargs["check_out"]
         # .reservation
         return context
 
@@ -53,6 +55,8 @@ class CreateReservationView(user_mixin.LoggedInOnlyView, CreateView):
         form.instance.user = self.request.user
         form.instance.room = room
         form.instance.hotel = room.hotel
+        form.instance.check_in = self.kwargs.get("check_in")
+        form.instance.check_out = self.kwargs.get("check_out")
         form.save()
         return super(CreateReservationView, self).form_valid(form)
 
