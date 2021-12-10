@@ -8,7 +8,7 @@
 
 <body>
 
-        <h1>게시글 개별 페이지입니다</h1>
+        <!-- <h1>게시글 개별 페이지입니다</h1>
         <p>{{hotels.title}}</p>
         <p>{{hotels.contents}}</p>
 
@@ -23,62 +23,11 @@
         <img src={{hotels.thumb_file.url}} style="width:60px; height:60px" />
         {% endif %}
 
-        <h1>객실 정보</h1>
-        {% for item in rooms %}
-        <p>{{item.room_name}}</p>
-        <p>{{item.price}}</p>
-        <!--a href="#">예약하기</a-->
-        {% endfor %}
-        <h1>편의 시설</h1>
-        <input type="hidden" name="types[]" id="na" value="{{hotels.facility}}">
-
-        <p>
-                <li><label for="id_types_0"><input type="checkbox" name="types[]" value="1" id="id_types_0">
-                                장애인 전용 객실</label>
-
-                </li>
-                <li><label for="id_types_1"><input type="checkbox" name="types[]" value="2" id="id_types_1">
-                                장애인 전용 화장실</label>
-
-                </li>
-                <li><label for="id_types_2"><input type="checkbox" name="types[]" value="3" id="id_types_2">
-                                장애인 전용 주차구역</label>
-
-                </li>
-                <li><label for="id_types_3"><input type="checkbox" name="types[]" value="4" id="id_types_3">
-                                장애인 전용 엘레베이터</label>
-
-                </li>
-                <li><label for="id_types_4"><input type="checkbox" name="types[]" value="5" id="id_types_4">
-                                주출입구 단차 없음</label>
-
-                </li>
-                <li><label for="id_types_5"><input type="checkbox" name="types[]" value="7" id="id_types_5">
-                                휠체어 대여 가능</label>
-
-                </li>
-                <li><label for="id_types_6"><input type="checkbox" name="types[]" value="8" id="id_types_6">
-                                휠체어 사용자 접근 가능</label>
-
-                </li>
-                <li><label for="id_types_7"><input type="checkbox" name="types[]" value="9" id="id_types_7">
-                                장애인 보조기기 제공</label>
-
-                </li>
-                <li><label for="id_types_8"><input type="checkbox" name="types[]" value="10" id="id_types_8">
-                                시각 장애인 접근성</label>
-
-                </li>
-                <li><label for="id_types_9"><input type="checkbox" name="types[]" value="12" id="id_types_9">
-                                청각장애인 접근성</label>
-                </li>
-        </p>
-
         <a href="/index">목록</a>
         <a href="/index">예약</a>
         <button type="button" id="btnMod" onclick="location.href='/update/{{hotels.id}}'">수정
                 </a></button>
-        <button type="button" id="btnDel" onclick="location.href='/delete/{{hotels.id}}'">삭제</a></button>
+        <button type="button" id="btnDel" onclick="location.href='/delete/{{hotels.id}}'">삭제</a></button> -->
 
 
         <!--여기 새로 구현한 곳인데 확인부탁드려요-->
@@ -87,14 +36,12 @@
         <p>호텔 이름 : {{hotels.title}}</p>
         <p>호텔 콘텐츠 : {{hotels.contents}}</p>
         <p>호텔 위치 : {{hotels.address}}</p>
-        <p>호텔 시작 : {{hotels.start_dt}}</p>
-        <p>호텔 끝 : {{hotels.end_dt}}</p>
-        <p>호텔 가격 : {{hotels.pro_price}}</p>
-        <p>호텔 등록일 : {{hotels.reg_dt}}</p>
+        <p>호텔 시작 : {{hotels.start_dt|date:'Y-m-d'}}</p>
+        <p>호텔 끝 : {{hotels.end_dt|date:'Y-m-d'}}</p>
+        <p>호텔 등록일 : {{hotels.reg_dt|date:'Y-m-d'}}</p>
         <div>호텔 옵션: {% for type in hotels.type.all%}
                 <p>{{type}}</p>
                 {% endfor %}
-
         </div>
 
 
@@ -108,6 +55,7 @@
         <p>방 이름: {{item.room_name}}</p>
         <p>방 가격: {{item.price}}</p>
         <a href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
+        <a href="/rooms/deleteroom/{{item.pk}}/{{hotels.pk}}">삭제하기</a>
         <hr />
         {% endfor %}
         <!--
@@ -158,10 +106,10 @@
 -->
         <a href="{% url 'hotels:index' %}">목록</a>
         <a href="{% url 'hotels:index' %}">예약</a>
-        <button type="button" id="btnMod" onclick="location.href='/update/{{hotels.id}}'">수정
+        <button type="button" id="btnMod" onclick="location.href='/hotels/update/{{hotels.id}}'">수정
                 </a>
-                <button type="button" id="btnDel" onclick="location.href='/delete/{{hotels.id}}'">삭제</a>
-
+                <button type="button" id="btnDel" onclick="location.href='/hotels/delete/{{hotels.id}}'">삭제</a>
+         <button type="button" id="btnMod" onclick="location.href='/rooms/makeroom/{{hotels.id}}'">객실추가하러가기
 </body>
 
 </html>

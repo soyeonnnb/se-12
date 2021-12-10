@@ -18,14 +18,18 @@
 
 
         </p>
+        
         <input type="hidden" name="roomNm" id="roomNm" value="">
         <input type="hidden" name="room_price" id="roomPrice" value="">
-
+        
         <button type="button" class="btn btn-primary" onclick="board.fn_save();">저장하기</button>
     </form>
+
+    
 </div>
 <script type="text/javascript">
-
+    var pk = "{{form.pk}}"
+    $('#pk').val(pk);
     let board = {
 
         fn_roomPlus: function () {
