@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_title %}호텔 정보{% endblock page_title %}
+{% block head %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock head %}
 {% block content %}
-<head>
-      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-</head>
+
 <body>
     <div class="hotel-info-container">
         <div class="hotel-img-container">
@@ -17,9 +18,13 @@
             <h3>{{hotels.title}}</h3>
             <p class="hotel-address">{{hotels.address}}</p>
             <div class="modify-buttons">
-                <button type="button" id="btnMod" onclick="location.href='/hotels/update/{{hotels.id}}'">수정</a>
-                <button type="button" id="btnDel" onclick="location.href='/hotels/delete/{{hotels.id}}'">삭제</a>
-                <button type="button" id="btnMod" onclick="location.href='/rooms/makeroom/{{hotels.id}}'">객실 추가
+                <a href="{% url 'core:home' %}">home</a>
+                {% if user == hotels.mem_seq %}
+                <a href="{% url 'hotels:my_hotel_reservation' pk=hotels.pk %}">예약현황</a>
+                <a href="{% url 'hotels:updatehotel' pk=hotels.pk %}">수정</a>
+                <a href="{% url 'hotels:deletehotel' pk=hotels.pk %}">삭제</a>
+                <a href="{% url 'rooms:makeroom' pk=hotels.pk %}">객실 추가하러 가기</a>
+                {% endif %}
             </div>
             <div class="hotel-date">
                 <p>호텔 시작 {{hotels.start_dt|date:'Y-m-d'}}</p>
@@ -34,43 +39,63 @@
     </div>
     <div class="tabmenu">
         <ul>
-          <li id="tab1" class="btnCon"> <input type="radio" checked name="tabmenu" id="tabmenu1">
-            <label for="tabmenu1">객실 안내 / 예약</label>
-            <div class="tabCon">
-                <div class="check-date">
-                    <span class="check-in-date">체크인: {{check_in}}</span>
-                    |
-                    <span class="check-out-date">체크아웃: {{check_out}}</span>
-                </div>
-                 {% for item in rooms %}
-                <div class="room-list">
-                    <div class="room-detail">
-                        <p>{{item.room_name}}</p>
-                        <br/>
-                        <p>{{item.price}}</p>
+            <li id="tab1" class="btnCon"> <input type="radio" checked name="tabmenu" id="tabmenu1">
+                <label for="tabmenu1">객실 안내 / 예약</label>
+                <div class="tabCon">
+                    <div class="check-date">
+                        <span class="check-in-date">체크인 {{check_in}}</span>
+                        <span>|</span>
+                        <span class="check-out-date">체크아웃 {{check_out}}</span>
                     </div>
-                    <div class="go-payment">
-                        <a class="reserve-hotel"href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
-                        <a class="remove-hotel" href="/rooms/deleteroom/{{item.pk}}/{{hotels.pk}}">삭제하기</a>
+                    {% for item in rooms %}
+                    <div class="room-list">
+                        <div class="room-detail">
+                            <p>{{item.room_name}}</p>
+                            <br/>
+                            <p>{{item.price}}</p>
+                        </div>
+                        <div class="go-payment">
+                            <a class="reserve-hotel" href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
+                            {% if user == hotel.mem_seq %}
+                            <a class="remove-hotel" href="{% url 'rooms:deleteroom' pk=item.pk fk=hotel.pk %}">삭제하기</a>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-                <div class="go-index">
-                    <a href="{% url 'hotels:index' %}">목록</a>
-                    <a href="{% url 'hotels:index' %}">예약</a>
-                </div>
-                 {% endfor %}
-          </li>
-          <li id="tab2" class="btnCon"><input type="radio" name="tabmenu" id="tabmenu2">
-            <label for="tabmenu2">호텔 옵션</label>
-            <div class="tabCon" >
+                    {% endfor %}
+            </li>
+            <li id="tab2" class="btnCon"><input type="radio" name="tabmenu" id="tabmenu2">
+                <label for="tabmenu2">호텔 옵션</label>
+                <div class="tabCon" >
+                <div class="option-container">
                 {% for type in hotels.type.all%}
-                <p>{{type}}</p>
+                    <p>{{type}}</p>
                 {% endfor %}
-            </div>
-          </li>
+                </div>
+                </div>
+            </li>
         </ul>
-      </div>
     </div>
+    </div>
+<!--        <hr />-->
+<!--        <div>호텔 옵션: {% for type in hotels.type.all%}-->
+<!--                <p>{{type}}</p>-->
+<!--                {% endfor %}-->
+<!--        </div>-->
+
+<!--        <h1>객실 정보</h1>-->
+<!--        <span>체크인: {{check_in}}</span>-->
+<!--        <span>체크아웃: {{check_out}}</span>-->
+<!--        {% for item in rooms %}-->
+<!--        <p>방 이름: {{item.room_name}}</p>-->
+<!--        <p>방 가격: {{item.price}}</p>-->
+<!--        <a href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>-->
+<!--        {% if user == hotel.mem_seq %}-->
+<!--        <a href="{% url 'rooms:deleteroom' pk=item.pk fk=hotel.pk %}">삭제하기</a>-->
+<!--        {% endif %}-->
+<!--        <hr />-->
+<!--        {% endfor %}-->
+
+</div>
 </body>
 
 </html>
