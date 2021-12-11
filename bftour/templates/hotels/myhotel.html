@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>호텔</h2>
+<a href="{% url 'hotels:makehotel' %}">상품생성</a>
+{% for hotel in hotels %}
+<a href="{% url 'hotels:viewhotel' hotel_pk=hotel.pk check_in=check_in check_out=check_out%}">{{hotel}}</a>
+{% endfor %}
+{% endblock %}

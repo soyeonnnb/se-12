@@ -7,12 +7,22 @@
 <div>
     {% for reservation in reservations %}
     <h3>{{reservation}}</h3>
+    <span>예약상세: {{reservation.request}}</span>
+    {% if reservation.in_progress == False %}
+    {% if reservation.is_finished == False %}
+    <a href="{% url 'reservations:update' pk=reservation.pk %}">예약수정</a>
+    <a href="{% url 'reservations:delete' pk=reservation.pk %}">예약삭제</a>
+    {% endif %}
+    {% endif %}
+    {% if reservation.is_finished == True %}
     {% if reservation.has_reviews %}
     <p>작성완료</p>
     {% else %}
     <a href="{% url 'reviews:create' pk=reservation.pk %}">리뷰작성</a>
     {% endif %}
+    {% endif %}
     <hr />
+
     {% endfor %}
 </div>
 {% endblock %}

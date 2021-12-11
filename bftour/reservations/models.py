@@ -78,7 +78,7 @@ class Reservation(core_models.TimeStampedModel):
     payment = models.CharField(max_length=200, choices=PAYMENT_CHOICES, default="")
 
     def __str__(self):
-        return f"User:{self.user}-Hotel:{self.hotel}-Room:{self.room}-CheckInDate:{self.check_in}-CheckOutDate:{self.check_out}"
+        return f"User:{self.user}-Room:{self.room}-CheckInDate:{self.check_in}-CheckOutDate:{self.check_out}"
 
     def in_progress(self):
         now = timezone.now().date()
