@@ -22,9 +22,9 @@
                 <button type="button" id="btnMod" onclick="location.href='/rooms/makeroom/{{hotels.id}}'">객실 추가
             </div>
             <div class="hotel-date">
-                <p>호텔 시작 {{hotels.start_dt|date:'Y-m-d'}}</p>
-                <p>호텔 끝 {{hotels.end_dt|date:'Y-m-d'}}</p>
-                <p>호텔 등록일 {{hotels.reg_dt|date:'Y-m-d'}}</p>
+                <p>상품 시작일 : {{hotels.start_dt|date:'Y-m-d'}}</p>
+                <p>상품 종료일 : {{hotels.end_dt|date:'Y-m-d'}}</p>
+                <p>상품 등록일 : {{hotels.reg_dt|date:'Y-m-d'}}</p>
             </div>
             <div class="hotel-contents">
                 <h4>호텔 콘텐츠</h4>
@@ -75,22 +75,6 @@
 
 </html>
 <script type="text/javascript">
-        var check = $('#na').val();
-        console.log(check.length);
-
-        for (var i in check) {
-                console.log(check[i]);
-                if (check[i] == '1') $('input:checkbox[id="id_types_0"]').prop("checked", true);
-                else if (check[i] == '2') $('input:checkbox[id="id_types_1"]').prop("checked", true);
-                else if (check[i] == '3') $('input:checkbox[id="id_types_2"]').prop("checked", true);
-                else if (check[i] == '4') $('input:checkbox[id="id_types_3"]').prop("checked", true);
-                else if (check[i] == '5') $('input:checkbox[id="id_types_4"]').prop("checked", true);
-                else if (check[i] == '6') $('input:checkbox[id="id_types_5"]').prop("checked", true);
-                else if (check[i] == '7') $('input:checkbox[id="id_types_6"]').prop("checked", true);
-                else if (check[i] == '8') $('input:checkbox[id="id_types_7"]').prop("checked", true);
-                else if (check[i] == '9') $('input:checkbox[id="id_types_8"]').prop("checked", true);
-                else if (check[i] == '10') $('input:checkbox[id="id_types_9"]').prop("checked", true);
-        }
-
+        
 </script>
 {% endblock %}
