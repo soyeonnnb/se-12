@@ -6,7 +6,7 @@ app_name = "reservations"
 urlpatterns = [
     path("", views.view_reservations, name="reservation_list"),
     path(
-        "<int:room_pk>/reservate/",
+        "<int:room_pk>/<check_in>/<check_out>/reservate/",
         views.CreateReservationView.as_view(),
         name="reservate",
     ),

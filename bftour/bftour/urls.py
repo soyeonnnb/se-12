@@ -1,6 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
 
+# 이미지 URL 설정
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path("", include("core.urls", namespace="core")),
     path("hotels/", include("hotels.urls", namespace="hotels")),
@@ -10,3 +15,7 @@ urlpatterns = [
     path("users/", include("users.urls", namespace="users")),
     path("admin/", admin.site.urls),
 ]
+
+# 이미지 url 설정
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
