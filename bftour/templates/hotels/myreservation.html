@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="height:120px;"></div>
+<a href="{% url 'hotels:my_hotel' %}">내 호텔 리스트</a>
+<div>
+    <h1>예약현황</h1>
+    <p>호텔: {{hotel}}</p>
+    <ol>
+        {% for re in reservations %}
+        <ul>
+            <li>예약자: {{re.user}}</li>
+            <li>예약룸: {{re.room}}</li>
+            <li>체크인: {{re.check_in}}</li>
+            <li>체크아웃: {{re.check_out}}</li>
+            <li>완료현황:
+                {% if re.in_progress %}
+                체크인중
+                {% elif re.is_finished %}
+                체크아웃 완료
+                {% else %}
+                체크인 전
+                {% endif %}
+
+            </li>
+            <hr />
+        </ul>
+        {% endfor %}
+    </ol>
+</div>
+{% endblock %}

@@ -4,10 +4,12 @@ from .models import Hotel
 from .forms import MakeHotel, MakeRoom
 from rooms.models import Room
 from django.contrib import messages
+from reservations import models as reservations_models
 
 # Create your views here.
-def index(request):
-    hotels = Hotel.objects.all()
+def my_hotel(request):
+    user = request.user
+    hotels = Hotel.objects.filter(mem_seq=user)
     check_in = datetime.date.today()
     check_out = datetime.date.today() + datetime.timedelta(days=1)
     context = {
@@ -15,8 +17,24 @@ def index(request):
         "check_in": check_in,
         "check_out": check_out,
     }
+    return render(request, "hotels/myhotel.html", context)
 
-    return render(request, "hotels/index.html", context)
+
+def my_hotel_reservation(request, pk):
+    hotel = Hotel.objects.get(pk=pk)
+    reservations = reservations_models.Reservation.objects.filter(hotel=pk)
+    check_in = datetime.date.today()
+    check_out = datetime.date.today() + datetime.timedelta(days=1)
+    return render(
+        request,
+        "hotels/myreservation.html",
+        {
+            "hotel": hotel,
+            "reservations": reservations,
+            "check_in": check_in,
+            "check_out": check_out,
+        },
+    )
 
 
 def makehotels(request):
@@ -28,11 +46,13 @@ def makehotels(request):
             forms.mem_seq = request.user
             forms.reg_id = request.user.name
             forms.save()
+            form.save_m2m()
 
-        return redirect("/hotels/index")
+        return redirect("hotels:my_hotel")
     else:
         form = MakeHotel()
     return render(request, "hotels/makehotel.html", {"form": form})
+
 
 def viewhotel(request, hotel_pk, check_in, check_out):
     # 게시글(Post) 중 pk(primary_key)를 이용해 하나의 게시글(post)를 검색
@@ -53,7 +73,7 @@ def deletehotel(request, pk):
     rooms = Room.objects.get(hotel_id=pk)
     hotels.delete()
     rooms.delete()
-    return redirect("/index")
+    return redirect("hotels:my_hotel")
 
 
 def updatehotel(request, pk):
@@ -64,14 +84,11 @@ def updatehotel(request, pk):
             forms = form.save(commit=False)
             forms.reg_id = request.user.id
             forms.save()
-        return redirect("/index")
+        return redirect("hotels:my_hotel")
     else:
         form = MakeHotel(instance=hotel)
     return render(
         request,
-        "hotels/updatehotel.html",
-        {"form": form},
+        "hotels/makehotel.html",
+        {"form": form, "pk": pk},
     )
-
-
-
