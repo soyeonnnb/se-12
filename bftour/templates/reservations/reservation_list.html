@@ -50,11 +50,10 @@
         {% if reservation.has_reviews %}
         <p>작성완료</p>
         {% else %}
-        <a href="{% url 'reviews:create' pk=reservation.pk %}">리뷰작성</a>
+        <a class="go-review" href="{% url 'reviews:create' pk=reservation.pk %}">리뷰작성</a>
         {% endif %}
         {% endif %}
         <hr />
-
     {% endfor %}
 </div>
 </div>

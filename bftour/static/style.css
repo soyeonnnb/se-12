@@ -925,3 +925,87 @@ input[type='file']:hover {
 .change-reservation a:hover{
     color: #4AA8DB;
 }
+
+.go-review {
+    text-align: right;
+}
+
+.review-list-container p{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.reserved-data {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.modify-review {
+    text-align: right;
+}
+
+.modify-review a{
+    color: #777777;
+    font-weight: 700;
+}
+.modify-review a:hover{
+    color: #4AA8DB;
+}
+
+.score {
+    background: #4AA8DB;
+    color: #fff !important;
+    width: 50px;
+    text-align: center;
+    padding: 3px;
+    border-radius: 4px;
+}
+
+.review-form-container {
+    padding-top: 100px;
+    height: 100vh;
+}
+
+.review-info {
+    width: 80%;
+    margin: auto;
+}
+
+.review-box {
+    width: 70%;
+    margin: auto;
+}
+
+.review-box p{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#id_review {
+    background: #e5e5e5;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#id_rating {
+    background: #e5e5e5;
+    width: 300px;
+    border: none;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.save-review {
+    color: #fff;
+    background: #4AA8DB;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 50px;
+    width: 300px;
+    border-radius: 4px;
+}
