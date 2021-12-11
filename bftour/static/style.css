@@ -882,5 +882,46 @@ input[type='file']:hover {
     padding-top: 100px;
     height: 80vh;
     width: 100%;
-    background: #e5e5e5;
+}
+
+.go-my-list {
+    padding: 5px;
+    border: 2px solid #4AA8DB;
+    color: #4AA8DB;
+    font-weight: 700;
+    border-radius: 12px;
+}
+
+.reservation-mine{
+    width: 80%;
+    margin: auto;
+}
+.reservation-mine-text {
+    display: flex;
+}
+.reservation-mine li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.hotel-on-booking {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.reservation-mine-text h3{
+    width: 80%;
+}
+
+.change-reservation {
+    text-align: right;
+}
+
+.change-reservation a{
+    color: #777777;
+    font-weight: 700;
+}
+
+.change-reservation a:hover{
+    color: #4AA8DB;
 }
