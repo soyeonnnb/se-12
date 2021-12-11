@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import  MakeRoom
+from hotels.forms import  MakeRoom
 from django.contrib import messages
 from rooms.models import Room
 

@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html'}
+{% block page_title %}호텔 정보{% endblock page_title %}
+{% block content %}
 
 <head>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <meta charset="UTF-8">
-    <title>Title</title>
 </head>
-
 <body>
     <div class="container">
         <table class="table table-striped">
@@ -33,6 +31,4 @@
             <tbody>
         </table>
 </body>
-</body>
-
-</html>
+{% endblock %}

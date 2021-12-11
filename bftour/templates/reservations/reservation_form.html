@@ -2,44 +2,44 @@
 {% block page_title %}예약 페이지{% endblock page_title %}
 {% block content %}
 
-<h1>예약 페이지</h1>
+<div class="pay-container">
+        <div class="view-container">
+            <h3>예약자 정보</h3>
+            <hr/>
+            <div>
+                <p class="customer-info">{{ user.name }}</p>
+                <p class="customer-info">{{ user.email }}</p>
+                <p class="customer-info">{{ user.phone }}</p>
+            </div>
+            <form action="." method="POST" class="post-form">
+                {% csrf_token %}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="payment_agreement" id="flexCheckChecked" checked>
+                  <label class="form-check-label" for="flexCheckChecked">
+                    (필수) 숙소이용규칙 및 취소/환불규정 동의
+                  </label>
+                </div>
+                {{form.request}}
+                {{form.payment}}
 
-<h3>예약자 정보</h3>
-
-<div>
-  <p>예약자 이름 : {{ user.name }}</p>
-  <p>예약자 이메일 : {{ user.email }}</p>
-  <p>예약자 번호 : {{ user.phone }}</p>
+              </form>
+        </div>
+        <div class="payment-container">
+            <div>
+                <p class="room-info"><span>숙소 이름</span> {{ room.hotel.title }}</p>
+                <p class="room-info"><span>객실 이름</span> {{ room.room_name }}</p>
+                <p class="room-info"><span>체크인</span> {{check_in}}</p>
+                <p class="room-info"><span>체크아웃</span> {{check_out}}</p>
+            </div>
+            <hr class="bil-hr"/>
+            <div class="total-container">
+                <h3>총 결제 금액</h3>
+                <p class="total-price">{{ room.price }}원</p>
+            </div>
+            <div>
+                <button type="submit" class="save btn btn-default" id="pay-button">결제하기</button>
+              </div>
+        </div>
+        </div>
 </div>
-
-<h3>결제 정보</h3>
-<div>
-  <p>숙소 이름 : {{ room.hotel.title }}</p>
-  <p>객실 이름 : {{ room.room_name }}</p>
-  <p>체크인 : {{check_in}}</p>
-  <p>체크아웃 :{{check_out}}</p>
-</div>
-
-<h3>총 결제 금액</h3>
-
-<div>
-  <p>{{ room.price }}원</p>
-</div>
-
-
-
-<form action="." method="POST" class="post-form">
-  {% csrf_token %}
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="payment_agreement" id="flexCheckChecked" checked>
-    <label class="form-check-label" for="flexCheckChecked">
-      (필수) 숙소이용규칙 및 취소/환불규정 동의
-    </label>
-  </div>
-  {{form.request}}
-  {{form.payment}}
-  <div>
-    <button type="submit" class="save btn btn-default">결제하기</button>
-  </div>
-</form>
 {% endblock %}

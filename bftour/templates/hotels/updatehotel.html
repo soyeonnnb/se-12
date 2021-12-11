@@ -1,67 +1,102 @@
+{% extends 'base.html' %}
+{% block page_title %}상품 정보 수정{% endblock page_title %}
+{% block content %}
 
 <head>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
-<div class="container">
-    <h5 class="my-3 border-bottom pb-2">상품 수정</h5>
-    <form method="POST" id="hotel" enctype="multipart/form-data" class="post-form my-3">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p><label><h3>객실 추가</h3></label>
+<div class="upload-container">
+    <form method="POST" id="hotel" enctype="multipart/form-data" class="upload-form">
+            <h3 class="my-3 border-bottom pb-2">상품 수정</h3>
+            <hr/>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="add-room-container">
+            <p>
+                <h3>객실 추가</h3>
+                <button type="button" id="room" value="" onclick="board.fn_roomPlus();">
+                    객실 추가
+                </button>
+            </p>
+            <hr/>
             <div id="roomList">
                 {{ form2.as_p }}
             </div>
+            </div>
         <button type="button" id="room" value="" onclick="board.fn_roomPlus();">객실 추가</button>
         <input type="hidden" name="types[]" id="na" value="{{hotels.facility}}">
-        <p><label><h3>편의 시설 추가</h3></label> 
-            <li><label for="id_types_0"><input type="checkbox" name="types[]" value="1" id="id_types_0">
-         장애인 전용 객실</label>
-        
-        </li>
-            <li><label for="id_types_1"><input type="checkbox" name="types[]" value="2" id="id_types_1">
-         장애인 전용 화장실</label>
-        
-        </li>
-            <li><label for="id_types_2"><input type="checkbox" name="types[]" value="3" id="id_types_2">
-         장애인 전용 주차구역</label>
-        
-        </li>
-            <li><label for="id_types_3"><input type="checkbox" name="types[]" value="4" id="id_types_3">
-         장애인 전용 엘레베이터</label>
-        
-        </li>
-            <li><label for="id_types_4"><input type="checkbox" name="types[]" value="5" id="id_types_4">
-         주출입구 단차 없음</label>
-        
-        </li>
-            <li><label for="id_types_5"><input type="checkbox" name="types[]" value="7" id="id_types_5">
-         휠체어 대여 가능</label>
-        
-        </li>
-            <li><label for="id_types_6"><input type="checkbox" name="types[]" value="8" id="id_types_6">
-         휠체어 사용자 접근 가능</label>
-        
-        </li>
-            <li><label for="id_types_7"><input type="checkbox" name="types[]" value="9" id="id_types_7">
-         장애인 보조기기 제공</label>
-        
-        </li>
-            <li><label for="id_types_8"><input type="checkbox" name="types[]" value="10" id="id_types_8">
-         시각 장애인 접근성</label>
-        
-        </li>
-            <li><label for="id_types_9"><input type="checkbox" name="types[]" value="12" id="id_types_9">
-         청각장애인 접근성</label>
-        </li>
-        </p>
-        </p> 
+        <div class="facility">
+            <h3>편의 시설 추가</h3>
+            <hr/>
+            <li>
+                <label for="id_types_0">
+                    <input type="checkbox" name="types[]" value="1" id="id_types_0">
+                    장애인 전용 객실
+                </label>
+            </li>
+            <li>
+                <label for="id_types_1">
+                    <input type="checkbox" name="types[]" value="2" id="id_types_1">
+                    장애인 전용 화장실
+                </label>
+            </li>
+            <li>
+                <label for="id_types_2">
+                    <input type="checkbox" name="types[]" value="3" id="id_types_2">
+                    장애인 전용 주차구역
+                </label>
+            </li>
+            <li>
+                <label for="id_types_3">
+                    <input type="checkbox" name="types[]" value="4" id="id_types_3">
+                    장애인 전용 엘레베이터
+                </label>
+            </li>
+            <li>
+                <label for="id_types_4">
+                    <input type="checkbox" name="types[]" value="5" id="id_types_4">
+                    주출입구 단차 없음
+                </label>
+            </li>
+            <li>
+                <label for="id_types_5">
+                    <input type="checkbox" name="types[]" value="7" id="id_types_5">
+                    휠체어 대여 가능
+                </label>
+            </li>
+            <li>
+                <label for="id_types_6">
+                    <input type="checkbox" name="types[]" value="8" id="id_types_6">
+                    휠체어 사용자 접근 가능
+                </label>
+            </li>
+            <li>
+                <label for="id_types_7">
+                    <input type="checkbox" name="types[]" value="9" id="id_types_7">
+                    장애인 보조기기 제공
+                </label>
+            </li>
+            <li>
+                <label for="id_types_8">
+                    <input type="checkbox" name="types[]" value="10" id="id_types_8">
+                    시각 장애인 접근성
+                </label>
+            </li>
+            <li>
+                <label for="id_types_9">
+                    <input type="checkbox" name="types[]" value="12" id="id_types_9">
+                    청각장애인 접근성
+                </label>
+            </li>
+        </div>
         <input type="hidden" name="roomNm" id="roomNm" value="">
         <input type="hidden" name="room_price" id="roomPrice" value="">
         
         <button type="button" class="btn btn-primary" onclick="board.fn_save();">저장하기</button>
     </form>
 </div>
+{% endblock %}
 <script type="text/javascript">
     var check = $('#na').val();
     console.log(check);
