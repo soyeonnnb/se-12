@@ -22,10 +22,21 @@
 </div>
 <script type="text/javascript">
     let board = {
+        
         fn_save: function () {
+
+            if($("#id_room_name").val()=='') {
+                alert("객실 이름을 입력해주세요");
+                return false;
+            }
+
+            if($("#id_price").val()==''){
+                alert("객실 가격을 입력해주세요");
+                return false; 
+            }
+
             $('#room').submit();
             alert("객실이 저장되었습니다.");
-
         },
         fn_list: function() {
             location.href="/hotels/my_hotel"
