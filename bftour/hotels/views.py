@@ -70,9 +70,7 @@ def viewhotel(request, hotel_pk, check_in, check_out):
 
 def deletehotel(request, pk):
     hotels = Hotel.objects.get(id=pk)
-    rooms = Room.objects.get(hotel_id=pk)
     hotels.delete()
-    rooms.delete()
     return redirect("hotels:my_hotel")
 
 
