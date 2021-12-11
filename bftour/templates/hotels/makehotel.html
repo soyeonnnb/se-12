@@ -24,10 +24,41 @@
 <script type="text/javascript">
     let board = {
         fn_save: function () {
+            if($("#id_title").val() == ''){
+                alert("상품명을 입력해주세요");
+                return false;
+            } 
+
+            if($("#id_contents").val() == ''){
+                alert("상품 내용을 입력해주세요");
+                return false;
+            }
+
+            if($("#id_address").val() == ''){
+                alert("주소를 입력해주세요");
+                return false;
+            } 
+
+            if($("#id_start_dt").val() == ''){
+                alert("상품시작일을 입력해주세요");
+                return false;
+            } 
+
+            if($("#id_end_dt").val() == ''){
+                alert("상품종료일을 입력해주세요");
+                return false;
+            }            
+
+            if($("#id_thumb_file").val() == ''){
+                alert("상품이미지를 첨부해주세요");
+                return false;
+            } 
+
             $('#hotel').submit();
         }
     }
 
+    
 
 </script>
 

@@ -10,8 +10,8 @@ class Room(models.Model):
         "hotels.Hotel", on_delete=models.CASCADE, related_name="rooms"
     )
     
-    room_name = models.CharField(max_length=50, default="")
-    price = models.CharField(max_length=50, default="") 
+    room_name = models.CharField(max_length=50, default="", blank=False)
+    price = models.CharField(max_length=50, default="", blank=False) 
     
     def __str__(self):
         return self.room_name

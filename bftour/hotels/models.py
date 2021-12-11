@@ -6,16 +6,16 @@ from django.urls import reverse_lazy
 class Hotel(models.Model):
 
     mem_seq = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    title = models.CharField(max_length=50)
-    contents = models.TextField()
-    address = models.CharField(max_length=255)
+    title = models.CharField(max_length=50, blank=False)
+    contents = models.TextField(blank=False)
+    address = models.CharField(max_length=255, blank=False)
     type = models.ManyToManyField("RoomType", related_name="hotels", blank=True)
-    start_dt = models.DateTimeField("date published")
-    end_dt = models.DateTimeField("date published")
+    start_dt = models.DateTimeField("date published", blank=False)
+    end_dt = models.DateTimeField("date published", blank=False)
     reg_dt = models.DateTimeField(auto_now_add=True)
     reg_id = models.CharField(max_length=50, default="admin")
     thumb_file = models.ImageField(
-        null=True, blank=True, upload_to="hotel_thumb/%Y/%m/%d"
+        null=True, blank=False, upload_to="hotel_thumb/%Y/%m/%d"
     )
     del_yn = models.BooleanField(default=False)
 
