@@ -12,8 +12,24 @@
             <hr/>
         </div>
         {% for reservation in reservations %}
-        <h3>{{reservation}}</h3>
-        <span>예약상세: {{reservation.request}}</span>
+<!--        <p>{{reservation}}</p>-->
+        <div class="reservation-user">
+            <span>예약자</span>
+            {{reservation.user}}
+        </div>
+        <div class="reservation-user">
+            <span>예약 객실</span>
+            {{reservation.room}}
+        </div>
+        <div class="reservation-user">
+            <span>체크인</span>
+            {{reservation.check_in}}
+        </div>
+        <div class="reservation-user">
+            <span>체크인</span>
+            {{reservation.check_out}}
+        </div>
+        <span>예약 상세: {{reservation.request}}</span>
         {% if reservation.in_progress == False %}
         {% if reservation.is_finished == False %}
         <a href="{% url 'reservations:update' pk=reservation.pk %}">예약수정</a>

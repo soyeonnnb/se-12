@@ -4,6 +4,7 @@
 
 <div class="pay-container">
         <div class="view-container">
+          <form action="." method="POST" class="post-form">
             <h3>예약자 정보</h3>
             <hr/>
             <div>
@@ -11,17 +12,18 @@
                 <p class="customer-info">{{ user.email }}</p>
                 <p class="customer-info">{{ user.phone }}</p>
             </div>
-            <form action="." method="POST" class="post-form">
+
                 {% csrf_token %}
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="payment_agreement" id="flexCheckChecked" checked>
                   <label class="form-check-label" for="flexCheckChecked">
                     (필수) 숙소이용규칙 및 취소/환불규정 동의
                   </label>
-                    {{form.request}}
-                    {{form.payment}}
                 </div>
-              </form>
+                {{form.request}}
+                {{form.payment}}
+
+
         </div>
         <div class="payment-container">
             <div>
@@ -37,7 +39,8 @@
             </div>
             <div>
                 <button type="submit" class="save btn btn-default" id="pay-button">결제하기</button>
-              </div>
+            </div>
+            </form>
         </div>
         </div>
 </div>
