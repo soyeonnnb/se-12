@@ -29,7 +29,6 @@ DJANGO_APPS = [
 
 PROJECT_APPS = [
     "hotels.apps.HotelsConfig",
-    "payments.apps.PaymentsConfig",
     "reservations.apps.ReservationsConfig",
     "reviews.apps.ReviewsConfig",
     "rooms.apps.RoomsConfig",
@@ -137,3 +136,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
 LOGIN_URL = "users:login"
 LOGIN_REDIRECT_URL = "users:login"
+
+
+#date 형식
+DATE_INPUT_FORMATS=['%Y-%m-%d']

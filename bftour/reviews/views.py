@@ -8,15 +8,6 @@ from . import models
 from users import mixins as user_mixin
 from reservations import models as reservation_model
 
-# 아직 reservation과 합치기 전이므로 임의의 내 reservation을 보여주는 템플릿 생성
-@login_required
-def view_reservations(request):
-    user = request.user
-    reservation_list = reservation_model.Reservation.objects.filter(user=user)
-    return render(
-        request, "reviews/reservation.html", {"reservation_list": reservation_list}
-    )
-
 
 @login_required
 def make_review(request, pk):
@@ -32,7 +23,7 @@ def make_review(request, pk):
             finished_form.reservation = reservation
             finished_form.room = reservation.room
             finished_form.save()
-            return redirect("reviews:reservation")
+            return redirect("reservations:reservation_list")
     else:
         form = forms.ReviewForm()
     return render(

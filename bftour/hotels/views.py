@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Hotel
 from .forms import MakeHotel, MakeRoom
@@ -7,43 +8,44 @@ from django.contrib import messages
 # Create your views here.
 def index(request):
     hotels = Hotel.objects.all()
-    context = {"hotels": hotels}
+    check_in = datetime.date.today()
+    check_out = datetime.date.today() + datetime.timedelta(days=1)
+    context = {
+        "hotels": hotels,
+        "check_in": check_in,
+        "check_out": check_out,
+    }
+
     return render(request, "hotels/index.html", context)
 
 
 def makehotels(request):
     if request.method == "POST":
         form = MakeHotel(request.POST, request.FILES)
-        form2 = MakeRoom(request.POST)
 
         if form.is_valid():
             forms = form.save(commit=False)
-            forms.facility = request.POST.getlist("types[]")
-            forms.reg_id = request.user.id
+            forms.mem_seq = request.user
+            forms.reg_id = request.user.name
             forms.save()
 
-        if form2.is_valid():
-            forms2 = form2.save(commit=False)
-            forms2.room_name = request.POST.getlist("roomNm")
-            forms2.price = request.POST.getlist("room_price")
-            forms2.hotel_id = forms.id
-            forms2.user_id = request.user.id
-            forms2.save()
-
-        return redirect("/index")
+        return redirect("/hotels/index")
     else:
         form = MakeHotel()
-        form2 = MakeRoom()
+    return render(request, "hotels/makehotel.html", {"form": form})
 
-    return render(request, "hotels/makehotel.html", {"form": form, "form2": form2})
-
-
-def viewhotel(request, pk):
+def viewhotel(request, hotel_pk, check_in, check_out):
     # 게시글(Post) 중 pk(primary_key)를 이용해 하나의 게시글(post)를 검색
-    hotels = Hotel.objects.get(pk=pk)
-    rooms = Room.objects.filter(hotel=pk)
+    hotels = Hotel.objects.get(pk=hotel_pk)
+    rooms = Room.objects.filter(hotel=hotels)
     # posting.html 페이지를 열 때, 찾아낸 게시글(post)을 post라는 이름으로 가져옴
-    return render(request, "hotels/viewhotel.html", {"hotels": hotels, "rooms": rooms})
+    kwargs = {
+        "hotels": hotels,
+        "rooms": rooms,
+        "check_in": check_in,
+        "check_out": check_out,
+    }
+    return render(request, "hotels/viewhotel.html", kwargs)
 
 
 def deletehotel(request, pk):
@@ -56,32 +58,20 @@ def deletehotel(request, pk):
 
 def updatehotel(request, pk):
     hotel = get_object_or_404(Hotel, pk=pk)
-    room = get_object_or_404(Room, hotel_id=pk)
-
     if request.method == "POST":
         form = MakeHotel(request.POST, request.FILES, instance=hotel)
-        form2 = MakeRoom(request.POST, instance=room)
         if form.is_valid():
             forms = form.save(commit=False)
-            forms.facility = request.POST.getlist("types[]")
             forms.reg_id = request.user.id
             forms.save()
-
-        if form2.is_valid():
-            forms2 = form2.save(commit=False)
-            forms2.room_name = request.POST.getlist("roomNm")
-            forms2.price = request.POST.getlist("room_price")
-            forms2.hotel_id = forms.id
-            forms2.user_id = request.user.id
-            forms2.save()
-
         return redirect("/index")
     else:
-        hotels = Hotel.objects.get(pk=pk)
         form = MakeHotel(instance=hotel)
-        form2 = MakeRoom(instance=room)
     return render(
         request,
         "hotels/updatehotel.html",
-        {"form": form, "form2": form2, "hotels": hotels},
+        {"form": form},
     )
+
+
+

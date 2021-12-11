@@ -46,7 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     user_id = models.CharField(max_length=50, unique=True, blank=False, null=False)
     name = models.CharField(max_length=30, blank=False)  # 이름 애트리뷰트
     password = models.CharField(max_length=45)  # Password 애트리뷰트
-    phone = models.IntegerField(blank=True, null=True)  # 핸드폰번호 애트리뷰트
+    phone = models.CharField(max_length=20, blank=True, null=True)  # 핸드폰번호 애트리뷰트
     email = models.EmailField(
         unique=True, blank=False, null=False
     )  # Email 애트리뷰트, 중복데이터 비허용

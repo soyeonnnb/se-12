@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block page_title %}상품 정보 조회{% endblock page_title %}
+{% block content %}
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+    <div class="hotel-info-container">
+        <div class="hotel-img-container">
+             {% if hotel.thumb_file %}
+            <img src={{hotels.thumb_file.url}} style="width:640px; height:360px" />
+             {% endif %}
+        </div>
+        <div class="hotel-content-container">
+            <h3>{{hotels.title}}</h3>
+            <p class="hotel-address">{{hotels.address}}</p>
+            <div class="modify-buttons">
+                <button type="button" id="btnMod" onclick="location.href='/hotels/update/{{hotels.id}}'">수정</a>
+                <button type="button" id="btnDel" onclick="location.href='/hotels/delete/{{hotels.id}}'">삭제</a>
+                <button type="button" id="btnMod" onclick="location.href='/rooms/makeroom/{{hotels.id}}'">객실 추가
+            </div>
+            <div class="hotel-date">
+                <p>호텔 시작 {{hotels.start_dt|date:'Y-m-d'}}</p>
+                <p>호텔 끝 {{hotels.end_dt|date:'Y-m-d'}}</p>
+                <p>호텔 등록일 {{hotels.reg_dt|date:'Y-m-d'}}</p>
+            </div>
+            <div class="hotel-contents">
+                <h4>호텔 콘텐츠</h4>
+                <p>{{hotels.contents}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="tabmenu">
+        <ul>
+          <li id="tab1" class="btnCon"> <input type="radio" checked name="tabmenu" id="tabmenu1">
+            <label for="tabmenu1">객실 안내 / 예약</label>
+            <div class="tabCon">
+                <div class="check-date">
+                    <span class="check-in-date">체크인 {{check_in}}</span>
+                    <span class="check-out-date">체크아웃 {{check_out}}</span>
+                </div>
+                 {% for item in rooms %}
+                <div class="room-list">
+                    <div class="room-detail">
+                        <p>{{item.room_name}}</p>
+                        <br/>
+                        <p>{{item.price}}</p>
+                    </div>
+                    <div class="go-payment">
+                        <a class="reserve-hotel"href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
+                        <a class="remove-hotel" href="/rooms/deleteroom/{{item.pk}}/{{hotels.pk}}">삭제하기</a>
+                    </div>
+                </div>
+                <div class="go-index">
+                    <a href="{% url 'hotels:index' %}">목록</a>
+                    <a href="{% url 'hotels:index' %}">예약</a>
+                </div>
+                 {% endfor %}
+          </li>
+          <li id="tab2" class="btnCon"><input type="radio" name="tabmenu" id="tabmenu2">
+            <label for="tabmenu2">호텔 옵션</label>
+            <div class="tabCon" >
+                {% for type in hotels.type.all%}
+                <p>{{type}}</p>
+                {% endfor %}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+</body>
+{% endblock %}
+<script type="text/javascript">
+        var check = $('#na').val();
+        console.log(check.length);
+
+        for (var i in check) {
+                console.log(check[i]);
+                if (check[i] == '1') $('input:checkbox[id="id_types_0"]').prop("checked", true);
+                else if (check[i] == '2') $('input:checkbox[id="id_types_1"]').prop("checked", true);
+                else if (check[i] == '3') $('input:checkbox[id="id_types_2"]').prop("checked", true);
+                else if (check[i] == '4') $('input:checkbox[id="id_types_3"]').prop("checked", true);
+                else if (check[i] == '5') $('input:checkbox[id="id_types_4"]').prop("checked", true);
+                else if (check[i] == '6') $('input:checkbox[id="id_types_5"]').prop("checked", true);
+                else if (check[i] == '7') $('input:checkbox[id="id_types_6"]').prop("checked", true);
+                else if (check[i] == '8') $('input:checkbox[id="id_types_7"]').prop("checked", true);
+                else if (check[i] == '9') $('input:checkbox[id="id_types_8"]').prop("checked", true);
+                else if (check[i] == '10') $('input:checkbox[id="id_types_9"]').prop("checked", true);
+        }
+
+</script>
