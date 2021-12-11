@@ -28,11 +28,13 @@ def makehotels(request):
             forms.mem_seq = request.user
             forms.reg_id = request.user.name
             forms.save()
+            form.save_m2m()
 
         return redirect("/hotels/index")
     else:
         form = MakeHotel()
     return render(request, "hotels/makehotel.html", {"form": form})
+
 
 def viewhotel(request, hotel_pk, check_in, check_out):
     # 게시글(Post) 중 pk(primary_key)를 이용해 하나의 게시글(post)를 검색
@@ -72,6 +74,3 @@ def updatehotel(request, pk):
         "hotels/updatehotel.html",
         {"form": form},
     )
-
-
-
