@@ -12,12 +12,38 @@
             <hr/>
         </div>
         {% for reservation in reservations %}
-        <h3>{{reservation}}</h3>
-        <span>예약상세: {{reservation.request}}</span>
+<!--        {% if reservation.in_progress == False %}-->
+<!--        {% if reservation.is_finished == False %}-->
+<!--        <a href="{% url 'reservations:update' pk=reservation.pk %}">예약수정</a>-->
+<!--        <a href="{% url 'reservations:delete' pk=reservation.pk %}">예약삭제</a>-->
+<!--        {% endif %}-->
+<!--        {% endif %}-->
+<!--        <p>{{reservation}}</p>-->
+        <div class="reservation-user">
+            <span>예약자</span>
+            {{reservation.user}}
+        </div>
+        <div class="reservation-user">
+            <span>예약 객실</span>
+            {{reservation.room}}
+        </div>
+        <div class="reservation-user">
+            <span>체크인</span>
+            {{reservation.check_in}}
+        </div>
+        <div class="reservation-user">
+            <span>체크아웃</span>
+            {{reservation.check_out}}
+        </div>
+         <div class="reservation-user">
+            <span>예약 상세: {{reservation.request}}</span>
+        </div>
         {% if reservation.in_progress == False %}
         {% if reservation.is_finished == False %}
-        <a href="{% url 'reservations:update' pk=reservation.pk %}">예약수정</a>
-        <a href="{% url 'reservations:delete' pk=reservation.pk %}">예약삭제</a>
+        <div class="change-reservation">
+            <a href="{% url 'reservations:update' pk=reservation.pk %}">예약 수정</a>
+            <a href="{% url 'reservations:delete' pk=reservation.pk %}">예약 삭제</a>
+        </div>
         {% endif %}
         {% endif %}
         {% if reservation.is_finished == True %}
