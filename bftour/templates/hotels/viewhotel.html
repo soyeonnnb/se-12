@@ -1,10 +1,13 @@
-<html>
-
-<head>
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <title>Posting!</title>
-</head>
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}
+Posting
+{% endblock page_title %}
+{% block head %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock head %}
+{% block content %}
 
 <body>
 
@@ -55,7 +58,9 @@
         <p>방 이름: {{item.room_name}}</p>
         <p>방 가격: {{item.price}}</p>
         <a href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
-        <a href="/rooms/deleteroom/{{item.pk}}/{{hotels.pk}}">삭제하기</a>
+        {% if user == hotel.mem_seq %}
+        <a href="{% url 'rooms:deleteroom' pk=item.pk fk=hotel.pk %}">삭제하기</a>
+        {% endif %}
         <hr />
         {% endfor %}
         <!--
@@ -104,12 +109,14 @@
                 </li>
         </p>
 -->
-        <a href="{% url 'hotels:index' %}">목록</a>
+        <a href="{% url 'core:home' %}">내 객실</a>
         <a href="{% url 'hotels:index' %}">예약</a>
-        <button type="button" id="btnMod" onclick="location.href='/hotels/update/{{hotels.id}}'">수정
-                </a>
-                <button type="button" id="btnDel" onclick="location.href='/hotels/delete/{{hotels.id}}'">삭제</a>
-         <button type="button" id="btnMod" onclick="location.href='/rooms/makeroom/{{hotels.id}}'">객실추가하러가기
+        {% if user == hotels.mem_seq %}
+        <a href="{% url 'hotels:updatehotel' pk=hotels.pk %}">수정</a>
+        <a href="{% url 'hotels:deletehotel' pk=hotels.pk %}">삭제</a>
+        <a href="{% url 'rooms:makeroom' pk=hotels.pk %}">객실 추가하러 가기</a>
+        {% endif %}
+
 </body>
 
 </html>
@@ -132,3 +139,4 @@
         }
 
 </script>
+{% endblock %}

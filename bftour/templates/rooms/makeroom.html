@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">객실 등록</h5>
+    <form method="POST" id="room" enctype="multipart/form-data" class="post-form my-3">
+        {% csrf_token %}
+        {{ room.as_p }}
+        <button type="button" class="btn btn-primary" onclick="board.fn_save();">저장하기</button>
+    </form>
+</div>
+<script type="text/javascript">
+    let board = {
+        fn_save: function () {
+            $('#room').submit();
+        }
+    }
+
+
+</script>
+{% endblock %}

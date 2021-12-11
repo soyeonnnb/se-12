@@ -30,7 +30,7 @@ def makehotels(request):
             forms.save()
             form.save_m2m()
 
-        return redirect("/hotels/index")
+        return redirect("hotels:index")
     else:
         form = MakeHotel()
     return render(request, "hotels/makehotel.html", {"form": form})
@@ -40,6 +40,7 @@ def viewhotel(request, hotel_pk, check_in, check_out):
     # 게시글(Post) 중 pk(primary_key)를 이용해 하나의 게시글(post)를 검색
     hotels = Hotel.objects.get(pk=hotel_pk)
     rooms = Room.objects.filter(hotel=hotels)
+    now_user = request.user
     # posting.html 페이지를 열 때, 찾아낸 게시글(post)을 post라는 이름으로 가져옴
     kwargs = {
         "hotels": hotels,
@@ -55,7 +56,7 @@ def deletehotel(request, pk):
     rooms = Room.objects.get(hotel_id=pk)
     hotels.delete()
     rooms.delete()
-    return redirect("/index")
+    return redirect("hotels:index")
 
 
 def updatehotel(request, pk):
@@ -66,11 +67,11 @@ def updatehotel(request, pk):
             forms = form.save(commit=False)
             forms.reg_id = request.user.id
             forms.save()
-        return redirect("/index")
+        return redirect("hotels:index")
     else:
         form = MakeHotel(instance=hotel)
     return render(
         request,
-        "hotels/updatehotel.html",
-        {"form": form},
+        "hotels/makehotel.html",
+        {"form": form, "pk": pk},
     )

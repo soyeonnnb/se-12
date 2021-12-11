@@ -1,6 +1,7 @@
 {% load static %}
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'style.css' %}?after" type="text/css">
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     <title>{% block page_title %}{% endblock page_title %} | BFT</title>
+    {% block head %}{% endblock head %}
 </head>
 
 <body>
@@ -16,4 +18,5 @@
     {% endblock %}
     {% include 'partials/footer.html' %}
 </body>
+
 </html>
