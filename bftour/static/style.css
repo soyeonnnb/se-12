@@ -752,9 +752,30 @@ input[type='file']:hover {
     padding: 5px;
     margin-left: 180px;
     background: #e5e5e5;
-
 }
 
 #id_type label input {
     width: 100px;
+}
+
+.result-hotel {
+    display: grid;
+    border: 1px solid #e5e5e5;
+    width: 350px;
+    text-align: center;
+    padding: 20px;
+}
+
+.result-hotel a{
+    font-weight: 700;
+    padding: 10px;
+}
+
+.result-hotel a:hover{
+    color: #4AA8DB;
+}
+
+.main-form ul {
+    column-count: 2;
+    display: inline-block;
 }

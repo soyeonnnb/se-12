@@ -15,10 +15,13 @@
 </div>
 <div class="search-container">
     <h3>최신 호텔</h3>
+    <hr/>
     {% for hotel in hotels %}
-    <a href="{% url 'hotels:viewhotel' hotel_pk=hotel.pk check_in=check_in check_out=check_out%}">
-        {{hotel}}
-    </a>
-    {% endfor %}
+    <div class="result-hotel">
+        <a href="{% url 'hotels:viewhotel' hotel_pk=hotel.pk check_in=check_in check_out=check_out%}">
+            {{hotel}}
+        </a>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
