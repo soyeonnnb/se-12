@@ -763,7 +763,7 @@ input[type='file']:hover {
 }
 
 .result-hotel {
-    display: grid;
+    display: table-cell;
     border: 1px solid #e5e5e5;
     width: 350px;
     text-align: center;
@@ -875,4 +875,11 @@ input[type='file']:hover {
     padding: 5px;
     border: none;
     border-radius: 4px;
+}
+
+.current-booked {
+    padding-top: 100px;
+    height: 80vh;
+    width: 100%;
+    background: #e5e5e5;
 }
