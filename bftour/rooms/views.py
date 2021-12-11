@@ -13,7 +13,7 @@ def makeroom(request, pk):
             forms.hotel_id = pk
             forms.user_id = request.user.id
             forms.save()
-        return redirect("hotel:makeroom", kwargs={"pk": pk})
+        return redirect("rooms:makeroom", kwargs={"pk": pk})
     else:
         room = MakeRoom()
     return render(request, "rooms/makeroom.html", {"room": room})

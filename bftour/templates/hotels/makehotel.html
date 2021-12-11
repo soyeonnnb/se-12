@@ -8,13 +8,11 @@
     <form method="POST" id="hotel" enctype="multipart/form-data" class="post-form my-3">
         {% csrf_token %}
         {{ form.as_p }}
-        <p><label>
-                <h3>객실 추가</h3>
-            </label>
-        <div id="roomList">
+        <p>
+        <!-- <div id="roomList">
             {{ form2.as_p }}
         </div>
-        <button type="button" id="room" value="" onclick="board.fn_roomPlus();">객실 추가</button>
+        <button type="button" id="room" value="" onclick="board.fn_roomPlus();">객실 추가</button> -->
 
 
         </p>
