@@ -15,7 +15,7 @@ class UserAdmin(admin.ModelAdmin):  # Admin 페이지에 User 테이블 추가
                 "fields": (
                     "user_id",
                     "name",
-                    "mobile",
+                    "phone",
                     "email",
                     "is_host",
                 )

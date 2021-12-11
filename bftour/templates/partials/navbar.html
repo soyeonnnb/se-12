@@ -8,7 +8,7 @@
     </div>
     {% if user.is_authenticated %}
     {% if user.is_host %}
-    <a href="#">staff</a>
+    <a href="{% url 'hotels:my_hotel' %}">staff</a>
     {% endif %}
     <a href="{% url 'users:logout' %}">로그아웃</a>
     <a href="{% url 'users:mypage' %}">마이페이지</a>

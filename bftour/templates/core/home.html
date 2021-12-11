@@ -14,7 +14,7 @@
     </form>
 </div>
 <div class="search-container">
-    <h3>{{type}}이(가) 있는 호텔</h3>
+    <h3>최신 호텔</h3>
     {% for hotel in hotels %}
     <a href="{% url 'hotels:viewhotel' hotel_pk=hotel.pk check_in=check_in check_out=check_out%}">
         {{hotel}}
