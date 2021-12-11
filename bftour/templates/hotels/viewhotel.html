@@ -1,100 +1,76 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block page_title %}
-Posting
-{% endblock page_title %}
-{% block head %}
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-{% endblock head %}
+{% block page_title %}호텔 정보{% endblock page_title %}
 {% block content %}
-
+<head>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
 <body>
-
-        <!--여기 새로 구현한 곳인데 확인부탁드려요-->
-        <hr />
-        <h1>새로) 게시글 개별 페이지입니다</h1>
-        <p>호텔 이름 : {{hotels.title}}</p>
-        <p>호텔 콘텐츠 : {{hotels.contents}}</p>
-        <p>호텔 위치 : {{hotels.address}}</p>
-        <p>호텔 시작 : {{hotels.start_dt|date:'Y-m-d'}}</p>
-        <p>호텔 끝 : {{hotels.end_dt|date:'Y-m-d'}}</p>
-        <p>호텔 등록일 : {{hotels.reg_dt|date:'Y-m-d'}}</p>
-        <div>호텔 옵션: {% for type in hotels.type.all%}
+    <div class="hotel-info-container">
+        <div class="hotel-img-container">
+             {% if hotel.thumb_file %}
+            <img src={{hotels.thumb_file.url}} style="width:640px; height:360px" />
+             {% endif %}
+        </div>
+        <div class="hotel-content-container">
+            <h3>{{hotels.title}}</h3>
+            <p class="hotel-address">{{hotels.address}}</p>
+            <div class="modify-buttons">
+                <button type="button" id="btnMod" onclick="location.href='/hotels/update/{{hotels.id}}'">수정</a>
+                <button type="button" id="btnDel" onclick="location.href='/hotels/delete/{{hotels.id}}'">삭제</a>
+                <button type="button" id="btnMod" onclick="location.href='/rooms/makeroom/{{hotels.id}}'">객실 추가
+            </div>
+            <div class="hotel-date">
+                <p>호텔 시작 {{hotels.start_dt|date:'Y-m-d'}}</p>
+                <p>호텔 끝 {{hotels.end_dt|date:'Y-m-d'}}</p>
+                <p>호텔 등록일 {{hotels.reg_dt|date:'Y-m-d'}}</p>
+            </div>
+            <div class="hotel-contents">
+                <h4>호텔 콘텐츠</h4>
+                <p>{{hotels.contents}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="tabmenu">
+        <ul>
+          <li id="tab1" class="btnCon"> <input type="radio" checked name="tabmenu" id="tabmenu1">
+            <label for="tabmenu1">객실 안내 / 예약</label>
+            <div class="tabCon">
+                <div class="check-date">
+                    <span class="check-in-date">체크인: {{check_in}}</span>
+                    |
+                    <span class="check-out-date">체크아웃: {{check_out}}</span>
+                </div>
+                 {% for item in rooms %}
+                <div class="room-list">
+                    <div class="room-detail">
+                        <p>{{item.room_name}}</p>
+                        <br/>
+                        <p>{{item.price}}</p>
+                    </div>
+                    <div class="go-payment">
+                        <a class="reserve-hotel"href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
+                        <a class="remove-hotel" href="/rooms/deleteroom/{{item.pk}}/{{hotels.pk}}">삭제하기</a>
+                    </div>
+                </div>
+                <div class="go-index">
+                    <a href="{% url 'hotels:index' %}">목록</a>
+                    <a href="{% url 'hotels:index' %}">예약</a>
+                </div>
+                 {% endfor %}
+          </li>
+          <li id="tab2" class="btnCon"><input type="radio" name="tabmenu" id="tabmenu2">
+            <label for="tabmenu2">호텔 옵션</label>
+            <div class="tabCon" >
+                {% for type in hotels.type.all%}
                 <p>{{type}}</p>
                 {% endfor %}
-        </div>
-
-
-        {% if hotel.thumb_file %}
-        <img src={{hotels.thumb_file.url}} style="width:60px; height:60px" />
-        {% endif %}
-        <h1>객실 정보</h1>
-        <span>체크인: {{check_in}}</span>
-        <span>체크아웃: {{check_out}}</span>
-        {% for item in rooms %}
-        <p>방 이름: {{item.room_name}}</p>
-        <p>방 가격: {{item.price}}</p>
-        <a href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
-        {% if user == hotel.mem_seq %}
-        <a href="{% url 'rooms:deleteroom' pk=item.pk fk=hotel.pk %}">삭제하기</a>
-        {% endif %}
-        <hr />
-        {% endfor %}
-        <!--
-        <h1>편의 시설</h1>
-        <input type="hidden" name="types[]" id="na" value="{{hotels.facility}}">
-
-        <p>
-                <li><label for="id_types_0"><input type="checkbox" name="types[]" value="1" id="id_types_0">
-                                장애인 전용 객실</label>
-
-                </li>
-                <li><label for="id_types_1"><input type="checkbox" name="types[]" value="2" id="id_types_1">
-                                장애인 전용 화장실</label>
-
-                </li>
-                <li><label for="id_types_2"><input type="checkbox" name="types[]" value="3" id="id_types_2">
-                                장애인 전용 주차구역</label>
-
-                </li>
-                <li><label for="id_types_3"><input type="checkbox" name="types[]" value="4" id="id_types_3">
-                                장애인 전용 엘레베이터</label>
-
-                </li>
-                <li><label for="id_types_4"><input type="checkbox" name="types[]" value="5" id="id_types_4">
-                                주출입구 단차 없음</label>
-
-                </li>
-                <li><label for="id_types_5"><input type="checkbox" name="types[]" value="7" id="id_types_5">
-                                휠체어 대여 가능</label>
-
-                </li>
-                <li><label for="id_types_6"><input type="checkbox" name="types[]" value="8" id="id_types_6">
-                                휠체어 사용자 접근 가능</label>
-
-                </li>
-                <li><label for="id_types_7"><input type="checkbox" name="types[]" value="9" id="id_types_7">
-                                장애인 보조기기 제공</label>
-
-                </li>
-                <li><label for="id_types_8"><input type="checkbox" name="types[]" value="10" id="id_types_8">
-                                시각 장애인 접근성</label>
-
-                </li>
-                <li><label for="id_types_9"><input type="checkbox" name="types[]" value="12" id="id_types_9">
-                                청각장애인 접근성</label>
-                </li>
-        </p>
--->
-        <a href="{% url 'core:home' %}">home</a>
-        {% if user == hotels.mem_seq %}
-        <a href="{% url 'hotels:my_hotel_reservation' pk=hotels.pk %}">예약현황</a>
-        <a href="{% url 'hotels:updatehotel' pk=hotels.pk %}">수정</a>
-        <a href="{% url 'hotels:deletehotel' pk=hotels.pk %}">삭제</a>
-        <a href="{% url 'rooms:makeroom' pk=hotels.pk %}">객실 추가하러 가기</a>
-        {% endif %}
-
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
 </body>
 
 </html>

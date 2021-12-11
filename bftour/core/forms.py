@@ -19,4 +19,5 @@ class SearchForm(forms.Form):
         queryset=hotels_model.RoomType.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False,
+
     )

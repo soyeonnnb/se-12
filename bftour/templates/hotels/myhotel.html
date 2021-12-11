@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<div style="height:120px;"></div>
-<div>
+
+<div class="my-hotel-container">
     <h2>내 호텔</h2>
-    <a href="{% url 'hotels:makehotel' %}">상품생성</a>
+    <hr/>
+    <div class="go-upload">
+        <a href="{% url 'hotels:makehotel' %}">호텔 등록하기</a>
+    </div>
     {% for hotel in hotels %}
     <a href="{% url 'hotels:viewhotel' hotel_pk=hotel.pk check_in=check_in check_out=check_out%}">{{hotel}}</a>
     {% endfor %}

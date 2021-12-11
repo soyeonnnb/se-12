@@ -1,30 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}호텔 상품 업로드{% endblock page_title %}
+{% block content %}
+
 <head>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
-<div class="container">
-    <h5 class="my-3 border-bottom pb-2">상품 등록</h5>
-    <form method="POST" id="hotel" enctype="multipart/form-data" class="post-form my-3">
+<body>
+<div class="upload-container">
+    <form class="upload-form" method="POST" id="hotel" enctype="multipart/form-data" class="post-form my-3">
+        <h3 class="my-3 border-bottom pb-2">상품 등록</h3>
+        <hr/>
         {% csrf_token %}
         {{ form.as_p }}
-        <p>
-        <!-- <div id="roomList">
-            {{ form2.as_p }}
-        </div>
-        <button type="button" id="room" value="" onclick="board.fn_roomPlus();">객실 추가</button> -->
-
-
-        </p>
-        
         <input type="hidden" name="roomNm" id="roomNm" value="">
         <input type="hidden" name="room_price" id="roomPrice" value="">
-        
-        <button type="button" class="btn btn-primary" onclick="board.fn_save();">저장하기</button>
+        <button class="upload-save" type="button" class="btn btn-primary" onclick="board.fn_save();">저장하기</button>
     </form>
-
-    
 </div>
+</body>
 <script type="text/javascript">
     var pk = "{{form.pk}}"
     $('#pk').val(pk);
@@ -62,3 +58,5 @@
 
 
 </script>
+
+{% endblock %}
