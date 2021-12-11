@@ -21,6 +21,7 @@ def my_hotel(request):
 
 
 def my_hotel_reservation(request, pk):
+    hotel = Hotel.objects.get(pk=pk)
     reservations = reservations_models.Reservation.objects.filter(hotel=pk)
     check_in = datetime.date.today()
     check_out = datetime.date.today() + datetime.timedelta(days=1)
@@ -28,6 +29,7 @@ def my_hotel_reservation(request, pk):
         request,
         "hotels/myreservation.html",
         {
+            "hotel": hotel,
             "reservations": reservations,
             "check_in": check_in,
             "check_out": check_out,

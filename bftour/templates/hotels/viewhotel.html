@@ -87,7 +87,7 @@ Posting
                 </li>
         </p>
 -->
-        <a href="{% url 'core:home' %}">내 객실</a>
+        <a href="{% url 'core:home' %}">home</a>
         {% if user == hotels.mem_seq %}
         <a href="{% url 'hotels:my_hotel_reservation' pk=hotels.pk %}">예약현황</a>
         <a href="{% url 'hotels:updatehotel' pk=hotels.pk %}">수정</a>
