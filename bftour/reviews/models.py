@@ -7,8 +7,8 @@ class Review(models.Model):
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="reviews"
     )
-    room = models.ForeignKey(
-        "rooms.Room", on_delete=models.CASCADE, related_name="reviews"
+    hotel = models.ForeignKey(
+        "hotels.Hotel", on_delete=models.CASCADE, related_name="reviews"
     )
     reservation = models.ForeignKey(
         "reservations.Reservation", on_delete=models.CASCADE, related_name="reviews"

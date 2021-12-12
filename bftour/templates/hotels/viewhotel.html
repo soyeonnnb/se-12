@@ -10,13 +10,14 @@
 <body>
     <div class="hotel-info-container">
         <div class="hotel-img-container">
-             {% if hotels.thumb_file %}
-                <img src="{{hotels.thumb_file.url}}" style="width:640px; height:360px" />
-             {% endif %}
+            {% if hotels.thumb_file %}
+            <img src="{{hotels.thumb_file.url}}" style="width:640px; height:360px" />
+            {% endif %}
         </div>
         <div class="hotel-content-container">
             <h3>{{hotels.title}}</h3>
             <p class="hotel-address">{{hotels.address}}</p>
+            <p class="hotel-address">별점: {{hotels.get_rating}}</p>
             <div class="modify-buttons">
                 <a href="{% url 'core:home' %}">home</a>
                 {% if user == hotels.mem_seq %}
@@ -51,13 +52,14 @@
                     <div class="room-list">
                         <div class="room-detail">
                             <p>{{item.room_name}}</p>
-                            <br/>
+                            <br />
                             <p>{{item.price}}</p>
                         </div>
                         <div class="go-payment">
-                            <a class="reserve-hotel" href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
+                            <a class="reserve-hotel"
+                                href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
                             {% if user == hotels.mem_seq %}
-                                <a class="remove-hotel" href="{% url 'rooms:deleteroom' pk=item.pk fk=hotels.pk %}">삭제하기</a>
+                            <a class="remove-hotel" href="{% url 'rooms:deleteroom' pk=item.pk fk=hotels.pk %}">삭제하기</a>
                             {% endif %}
                         </div>
                     </div>
@@ -65,41 +67,41 @@
             </li>
             <li id="tab2" class="btnCon"><input type="radio" name="tabmenu" id="tabmenu2">
                 <label for="tabmenu2">호텔 옵션</label>
-                <div class="tabCon" >
-                <div class="option-container">
-                {% for type in hotels.type.all%}
-                    <p>{{type}}</p>
-                {% endfor %}
-                </div>
+                <div class="tabCon">
+                    <div class="option-container">
+                        {% for type in hotels.type.all%}
+                        <p>{{type}}</p>
+                        {% endfor %}
+                    </div>
                 </div>
             </li>
         </ul>
     </div>
     </div>
-<!--        <hr />-->
-<!--        <div>호텔 옵션: {% for type in hotels.type.all%}-->
-<!--                <p>{{type}}</p>-->
-<!--                {% endfor %}-->
-<!--        </div>-->
+    <!--        <hr />-->
+    <!--        <div>호텔 옵션: {% for type in hotels.type.all%}-->
+    <!--                <p>{{type}}</p>-->
+    <!--                {% endfor %}-->
+    <!--        </div>-->
 
-<!--        <h1>객실 정보</h1>-->
-<!--        <span>체크인: {{check_in}}</span>-->
-<!--        <span>체크아웃: {{check_out}}</span>-->
-<!--        {% for item in rooms %}-->
-<!--        <p>방 이름: {{item.room_name}}</p>-->
-<!--        <p>방 가격: {{item.price}}</p>-->
-<!--        <a href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>-->
-<!--        {% if user == hotel.mem_seq %}-->
-<!--        <a href="{% url 'rooms:deleteroom' pk=item.pk fk=hotel.pk %}">삭제하기</a>-->
-<!--        {% endif %}-->
-<!--        <hr />-->
-<!--        {% endfor %}-->
+    <!--        <h1>객실 정보</h1>-->
+    <!--        <span>체크인: {{check_in}}</span>-->
+    <!--        <span>체크아웃: {{check_out}}</span>-->
+    <!--        {% for item in rooms %}-->
+    <!--        <p>방 이름: {{item.room_name}}</p>-->
+    <!--        <p>방 가격: {{item.price}}</p>-->
+    <!--        <a href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>-->
+    <!--        {% if user == hotel.mem_seq %}-->
+    <!--        <a href="{% url 'rooms:deleteroom' pk=item.pk fk=hotel.pk %}">삭제하기</a>-->
+    <!--        {% endif %}-->
+    <!--        <hr />-->
+    <!--        {% endfor %}-->
 
-</div>
+    </div>
 </body>
 
 </html>
 <script type="text/javascript">
-        
+
 </script>
 {% endblock %}

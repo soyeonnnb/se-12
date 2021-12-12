@@ -21,7 +21,7 @@ def make_review(request, pk):
             finished_form = form.save(commit=False)
             finished_form.user = request.user
             finished_form.reservation = reservation
-            finished_form.room = reservation.room
+            finished_form.hotel = reservation.hotel
             finished_form.save()
             return redirect("reservations:reservation_list")
     else:
