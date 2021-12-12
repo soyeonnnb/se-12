@@ -10,8 +10,8 @@
 <body>
     <div class="hotel-info-container">
         <div class="hotel-img-container">
-             {% if hotel.thumb_file %}
-            <img src={{hotels.thumb_file.url}} style="width:640px; height:360px" />
+             {% if hotels.thumb_file %}
+                <img src="{{hotels.thumb_file.url}}" style="width:640px; height:360px" />
              {% endif %}
         </div>
         <div class="hotel-content-container">
