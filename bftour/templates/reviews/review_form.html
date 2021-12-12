@@ -2,16 +2,19 @@
 {% block page_title %}{{page_name}}{% endblock page_title %}
 {% block content %}
 
-<h1>{{page_name}}</h1>
-
-<div>
-    <h4>호텔이름 :{{reservation.room.hotel.name}}</h4>
-    <h4>객실이름 :{{reservation.room}}</h4>
+<div class="review-form-container">
+    <div class="review-info">
+        <h3>{{page_name}}</h3>
+        <hr/>
+        <div class="review-box">
+            <p>호텔이름: {{reservation.room.hotel.name}}</p>
+            <p>객실이름: {{reservation.room}}</p>
+            <form action="." method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class="save-review">{{page_name}}</button>
+            </form>
+        </div>
+    </div>
 </div>
-
-<form action="." method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button>{{page_name}}</button>
-</form>
 {% endblock %}

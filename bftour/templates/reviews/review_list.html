@@ -11,13 +11,17 @@
             <h2>리뷰 작성 내역</h2>
             <hr/>
         </div>
-        {% for re in review_list %}
-        <h3>{{re}}</h3>
-        <h4>{{re.review}}: {{re.rating}}</h4>
-        <a href="{% url 'reviews:update' pk=re.pk %}">리뷰 수정</a>
-        <a href="{% url 'reviews:delete' pk=re.pk %}">리뷰 삭제</a>
-        <hr />
-        {% endfor %}
+        <div class="review-list-container">
+            {% for re in review_list %}
+            <p><span class="score">{{re.rating}}점</span>| {{re.review}}</p>
+            <p class="reserved-data">{{re}}</p>
+            <p class="modify-review">
+                <a href="{% url 'reviews:update' pk=re.pk %}">리뷰 수정</a>
+                <a href="{% url 'reviews:delete' pk=re.pk %}">리뷰 삭제</a>
+            </p>
+            <hr />
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
