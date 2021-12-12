@@ -22,4 +22,5 @@ def makeroom(request, pk):
 def deleteroom(request, pk, fk):
     rooms = Room.objects.get(id=pk)
     rooms.delete()
-    return redirect("hotel:viewhotel", kwargs={"pk": pk})
+    #return redirect("hotel:viewhotel", kwargs={"pk": pk})
+    return redirect("hotels:my_hotel")
