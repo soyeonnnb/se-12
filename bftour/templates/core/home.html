@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{%block head %}
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+{%endblock head %}
+
 {% block content %}
 
 <div class="main-form-container">
@@ -10,7 +18,7 @@
             <p>원하는 호텔을 한 번에 검색해보세요</p>
         </div>
         {{form.as_p}}
-        <button class="search-button">검색</button>
+        <button class="search-button" onclick="checkin()">검색</button>
     </form>
 </div>
 <div class="search-container">
@@ -24,4 +32,21 @@
     </div>
     {% endfor %}
 </div>
+<script type="text/javascript">
+     function checkin() {
+        const check_in = document.getElementById('id_start');
+        const check_out = document.getElementById('id_end');
+        var Checkin = check_in.value;
+        var out = check_out.value;
+        var arr1 = Checkin.split('-');
+        console.log(arr1);
+        var arr2 = out.split('-');
+        var dat1 = new Date(arr1[0], arr1[1], arr1[2]);
+	    var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
+	    var diff = dat2 - dat1;
+        if (diff < 0) {
+            alert('체크인이 체크아웃보다 늦습니다');
+        }
+}
+</script>
 {% endblock %}
