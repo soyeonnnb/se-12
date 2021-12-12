@@ -56,8 +56,8 @@
                         </div>
                         <div class="go-payment">
                             <a class="reserve-hotel" href="{% url 'reservations:reservate' room_pk=item.pk check_in=check_in check_out=check_out %}">예약하기</a>
-                            {% if user == hotel.mem_seq %}
-                            <a class="remove-hotel" href="{% url 'rooms:deleteroom' pk=item.pk fk=hotel.pk %}">삭제하기</a>
+                            {% if user == hotels.mem_seq %}
+                                <a class="remove-hotel" href="{% url 'rooms:deleteroom' pk=item.pk fk=hotels.pk %}">삭제하기</a>
                             {% endif %}
                         </div>
                     </div>
