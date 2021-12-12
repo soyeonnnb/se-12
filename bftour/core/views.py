@@ -11,13 +11,11 @@ from rooms import models as rooms_model
 
 def home(request):
     form = forms.SearchForm()
-    type = hotels_model.RoomType.objects.first()
-    hotels = hotels_model.Hotel.objects.filter(type=type)
+    hotels = hotels_model.Hotel.objects.all().order_by("-reg_dt")
     check_in = datetime.date.today()
     check_out = datetime.date.today() + datetime.timedelta(days=1)
     kwargs = {
         "form": form,
-        "type": type,
         "hotels": hotels,
         "check_in": check_in,
         "check_out": check_out,
